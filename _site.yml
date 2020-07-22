@@ -1,20 +1,22 @@
-name: "Data Visualisation with R"
+name: "ETC5521: Exploratory Data Analysis"
 output_dir: "docs"
 output:
   html_document:
     theme: cosmo
     highlight: textmate
-    css: assets/styles.css
+    css: site/styles.css
 navbar:
-  title: "Data Visualisation with R"
+  title: "ETC5521: Exploratory Data Analysis"
   left:
     - text: "Home"
       icon: fa-home
       href: index.html
-    - text: "Day 1"
-      href: day1.html
-    - text: "Day 2"
-      href: day2.html
+    - text: "Moodle"
+      icon: fa-archive
+      href: https://lms.monash.edu/course/view.php?id=81234
+    - text: "Unit Guide"
+      icon: fa-book
+      href: https://handbook.monash.edu/2020/units/ETC5521
   right:
     - icon: fa-github fa-lg
-      href: https://github.com/emitanaka/datavis-workshop-ssavic
+      href: https://github.com/numbats/eda

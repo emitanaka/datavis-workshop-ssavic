@@ -1,5 +1,0 @@
----
-title: "Day 2: Diving Deeper into Data Visualization with R"
-author: "Di Cook"
-date: "28th July 2020"
----

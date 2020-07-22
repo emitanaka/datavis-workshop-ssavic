@@ -1,9 +1,122 @@
 ---
-title: "Data Visualisation with R"
+title: "ETC5521: Exploratory Data Analysis"
 author: ["Emi Tanaka", "Di Cook"]
-date: "27-28th July 2020"
 ---
 
+```{r setup, include = FALSE}
+# please add any R-packages used here in DESCRIPTION imports
+library(yaml)
+library(tibble)
+library(dplyr)
+library(purrr)
+library(glue)
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = FALSE)
+```
 
-The changes should occur at the development branch not here. 
+```{r fns}
+make_rectangular <- function(.data) {
+  map_dfr(.data, ~tibble(!!!.x))
+}
 
+
+ui_list <- function(vec) {
+  for(x in vec) {
+    cat("-", x, "\n")
+  }
+}
+
+```
+
+
+```{r staffs}
+
+dat <- read_yaml("_course.yml")
+team_df <- make_rectangular(dat$team)
+schedule_df <- make_rectangular(dat$schedule)
+
+nlecturer <- sum(team_df$role=="lecturer")
+ntutor <- sum(team_df$role=="tutor")
+```
+
+
+## Lecturer`r ifelse(nlecturer > 1, 's', '')`
+
+```{r lecturers, results="asis"}
+team_df %>% 
+  filter(role=="lecturer") %>% 
+  pull(name) %>% 
+  ui_list()
+```
+
+## Tutor`r ifelse(ntutor > 1, 's', '')`
+
+```{r tutors, results="asis"}
+team_df %>% 
+  filter(role=="tutor") %>% 
+  pull(name) %>% 
+  ui_list()
+```
+
+## Consultations
+
+All consultations will be in using zoom. Check Moodle for the links.
+
+```{r consult, results="asis"}
+team_df %>% 
+  mutate(consult_print = glue::glue("{paste0(name, ': ', consult)}")) %>% 
+  pull(consult_print) %>% 
+  ui_list()
+```
+
+## Expectations
+
+* Unless your question is a personal issue or an administrative matter, please do not send us direct email. The moodle discussion forum is appropriate for questions related to the course.
+* For personal or private administrative issues, the email contact is: ETC5521.Clayton-x@monash.edu
+* Lectures are recorded, and you are expected to have either attended the lecture, or watched the recordings fully, prior to the tutorial for the week.
+* Tutorials are not recorded, and attendance is expected.
+* Bring your own laptop to the computer labs. If you do not have a laptop you can borrow one from MoVE
+* If you register after the start of the semester or if you miss a lecture/tutorial, it is your responsibility to catch up with missed material, learn about due dates for material to be turned in, and getting assigned to a group for team work, as necessary.
+* The computer software R and RStudio will be used for the unit.
+
+## Tentative Schedule
+
+* Lectures: **Mon 4-6pm** on zoom (see Moodle for link)
+* Tutorials: **Mon 6-7.30pm** on zoom (see Moodle for link)
+
+There are no lectures or tutorials during the midsemester break.
+
+```{r}
+schedule_df <- schedule_df %>% 
+  mutate(HTML = NA, PDF = NA, tut = NA) %>% 
+  mutate(slides = case_when(
+    !is.na(HTML) & !is.na(PDF) ~ glue("<a class='fa fa-link' href='slides/{HTML}' target='_blank'></a> <a class='fa fa-file-pdf' href='slides/{PDF}' target='_blank'></a>"),
+    !is.na(HTML) ~ glue("<a class='fa fa-link' href='slides/{HTML}' target='_blank'></a>"),
+    !is.na(PDF) ~ glue("<a class='fa fa-file-pdf' href='slides/{PDF}' target='_blank'></a>"),
+    TRUE ~ ""
+  ),
+  tut = case_when(
+    !is.na(tut) ~ glue("<a class='fa fa-tasks' href='labs/{tut}.html' target='_blank'></a> <a class='fa fa-wrench' href='labs/{tut}.Rmd' target='_blank'></a> <a class='fa fa-lightbulb' href='labs/{tut}sol.html' target='_blank'></a> <a class='fa fa-laptop' href='labs/{tut}sol.Rmd' target='_blank'></a>"),
+    TRUE ~ ""
+  ),
+  topic = ifelse(is.na(topic), "", topic),
+  readings = ifelse(is.na(readings), "", readings),
+  assessment = ifelse(is.na(assessment), "", assessment)) %>% 
+  select(week, lecturer, slides, tut, topic, readings, assessment)
+
+
+midsem_break <- 7 # after which week
+
+schedule_df %>% 
+  kable(escape = FALSE, align = c("c", "c", "c", "c", "l", "l"),
+        col.names = c("Week", "Lecturer", "Slides", "Tutorial", 
+                      "Topic", "Readings", "Assessments")) %>% 
+  kable_styling(bootstrap_options = "striped",
+                fixed_thead = T) %>% 
+  column_spec(1, width = "0.5cm") %>% 
+  column_spec(2, width = "1cm") %>% 
+  column_spec(3, width = "1cm") %>% 
+  group_rows("Midsemester Break (2 weeks)", midsem_break + 1, 12, label_row_css = "background-color: #d9e1e8;") %>% 
+  add_indent(1:midsem_break) # this needs to be done to match up with above
+```
