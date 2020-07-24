@@ -31,6 +31,8 @@ blockquote {
 }
 
 
+
+
 #sticky-footer {
   background-color: #006DAE;
   color: white;
@@ -41,6 +43,10 @@ blockquote {
 
 .d-none {
   display: none!important;
+}
+
+ul {
+  margin-left: 30px;
 }
 
 @media print {
@@ -68,3 +74,5 @@ blockquote {
       display: block!important;
     }
 }
+
+

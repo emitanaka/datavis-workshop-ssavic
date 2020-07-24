@@ -5,3 +5,5 @@ date: "27-28th July 2020"
 ---
 
 
+Welcome to the Data Visulisation with R Workshop!
+
