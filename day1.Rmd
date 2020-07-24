@@ -7,5 +7,7 @@ date: "27th July 2020"
 
 ## Slides
 
+* [Slide 1: Grammar of Graphics](slides/day1-session1.html)
+
 
 ## Exercises
