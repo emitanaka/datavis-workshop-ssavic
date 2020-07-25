@@ -7,7 +7,7 @@ date: "28th July 2020"
 ## Slides
 
 * [1]{.circle} [Grammar of Graphics](slides/day1-session1.html)
-
+* [2]{.circle} [Multiple layers, facetting and tidying your data](slides/day1-session2.html)
 
 ## Exercises
 
