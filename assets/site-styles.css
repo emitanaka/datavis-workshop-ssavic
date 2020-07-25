@@ -49,6 +49,35 @@ ul {
   margin-left: 30px;
 }
 
+.tag {
+  background: #027EB6;
+}
+
+.tag:hover {
+  background: #C8008F;
+  border: 1px solid black;
+}
+
+a.tag {
+  color: white!important;
+  font-size: 8pt;
+  padding: 4px;
+  border: 1px solid #006DAE;
+}
+
+.circle {
+    border-radius: 50%;
+    width: 20px;
+    line-height: 14px;
+    padding: 3px;
+    display:inline-block;
+
+    background: #006DAE;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
 @media print {
    .navbar {
         display: block;

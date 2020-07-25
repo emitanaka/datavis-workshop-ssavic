@@ -4,7 +4,7 @@ output:
   html_document:
     theme: cosmo
     highlight: textmate
-    css: assets/styles.css
+    css: assets/site-styles.css
 navbar:
   title: "Data Visualisation with R"
   left:

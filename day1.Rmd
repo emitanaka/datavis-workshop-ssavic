@@ -1,13 +1,16 @@
 ---
 title: "Day 1: Dipping Your Toes into Data Visualization with R"
 author: "Emi Tanaka"
-date: "27th July 2020"
+date: "28th July 2020"
 ---
-
 
 ## Slides
 
-* [Slide 1: Grammar of Graphics](slides/day1-session1.html)
+* [1]{.circle} [Grammar of Graphics](slides/day1-session1.html)
 
 
 ## Exercises
+
+* [1]{.circle} Recreate the plots using `ggplot2` <a class="tag" href="exercises/day1-exercise-01.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day1-exercise-01.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day1-exercise-01-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day1-exercise-01-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+
+
