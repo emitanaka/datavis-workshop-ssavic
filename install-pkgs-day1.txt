@@ -1,4 +1,5 @@
 tidyverse
+ggrepel
 usethis
 agridat
 catdata

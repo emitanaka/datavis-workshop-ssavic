@@ -1,0 +1,215 @@
+---
+title: "Day 1: Dipping your toes into <br>Data Visualisation with R"
+subtitle: "Introduction"
+author: "Emi Tanaka"
+email: "emi.tanaka@monash.edu"
+date: "28th July 2020 @ Statistical Society of Australia | Zoom"
+length: "360 minutes"
+color_theme: "yellow"
+pdflink: "session0.pdf"
+titleslide_bgimg: "images/bg4.jpg"
+output:
+  xaringan::moon_reader:
+    css:
+      - ninjutsu 
+      - "assets/animate.css"
+      - "assets/custom.css"
+      - "assets/fira-code.css"
+      - "assets/boxes.css"
+      - "assets/styles.css"
+      - "assets/monash-brand.css"
+      - "assets/table.css"
+    self_contained: false 
+    seal: false 
+    chakra: 'libs/remark-latest.min.js'
+    lib_dir: libs
+    mathjax: "assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    nature:
+      highlightStyle: googlecode
+      highlightLanguage: r 
+      highlightLines: true
+      highlightSpans: false 
+      countIncrementalSlides: false
+      slideNumberFormat: '%current%/%total%'
+      navigation:
+        scroll: false 
+        touch: true
+        click: false
+      ratio: '16:9'
+---
+
+```{r titleslide, child="assets/titleslide.Rmd"}
+```
+
+---
+
+<div class="grid" style="grid: 1fr / 1.2fr 2fr;">
+<div class="item white monash-bg-blue border-right">
+<br>
+
+<div class="circle-image">
+<center>
+<img src="images/avatar.png" width = "150px"/>
+</center>
+</div>
+
+**Emi Tanaka** <br>
+*Lecturer in Statistics*<br>
+Monash University
+
+<br>
+
+<i class="fas fa-globe"></i> https://emitanaka.org/
+
+<i class="fas fa-envelope"></i> emi.tanaka@monash.edu
+
+<i class="fab fa-twitter"></i> @statsgen
+
+</div>
+
+<div class="item">
+
+<h1>About your instructor</h1>
+
+<ul>
+<li>I moved to Melbourne in Jan 2020 to start my job at Monash</li>
+<li>I teach R at university courses as well as use it daily for research and hobby `r anicon::faa("reddit-alien", animate = "spin", anitype = "hover")`</li>
+<li>If you ever wonder who answers those stackoverflow questions, I'm one of those magic fairies `r anicon::faa("stack-overflow", animate = "tada", anitype = "hover")`</li>
+
+<center>
+<a href="https://stackexchange/users/10113966/emi"><img src="https://stackoverflow.com/users/flair/10113966.png" width="208" height="58" alt="profile for Emi at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Emi at Stack Overflow, Q&amp;A for professional and enthusiast programmers" style="border:solid 2px black;"></a>
+</center>
+<li>My main statistical application is agriculture and bioinformatics; these days I do more software</li>
+</ul>
+</div>
+
+</div>
+
+---
+
+<div class="grid" style="grid: 1fr / 1.2fr 2fr;">
+<div class="item white monash-bg-blue border-right">
+<br>
+
+<div class="circle-image">
+<center>
+<img src="images/FanCheng.png" width = "200px"/>
+</center>
+</div>
+
+**Fan Cheng** <br>
+*PhD Student*<br>
+Monash University
+
+<br>
+
+<i class="fas fa-globe"></i> https://fancheng.me/
+
+<i class="fas fa-envelope"></i> Fan.Cheng@monash.edu
+
+<i class="fab fa-twitter"></i> @fanchengfc
+
+</div>
+
+<div class="item">
+
+<h1>About your helper</h1>
+
+<ul>
+<li>I am a second-year PhD student in Statistics at Monash</li>
+<li>I work for the Monash Data Fluency team to teach workshops on R, Python, Git and Unix</li>
+<li>My research project is about manifold learning based on empirical probability distributions. If you are interested, I am more than happy to talk about it :)</li>
+</ul>
+</div>
+
+</div>
+
+
+---
+
+class: center middle
+
+
+.font_large[Introduce yourself in the chat!]
+
+<br>
+
+* What's your profession?  
+* Where do you live?
+* What's your hobby? 
+* What's would you like to people to know about you? 
+
+
+
+---
+
+# Schedule
+
+<br>
+
+Time | Activity 
+:----|:---
+8.30-9.00 | Registration + Installation Help
+9.00-9.30 | **Lesson 1:** Introduction + Tidy data
+9.30-9.45 |  *Break out session*
+9.45-10.15 | **Lesson 2:**  Basics of `ggplot2`
+10.15-10.30 | *Break out session*
+10.30 - 11.00 | *Coffee Break*
+11.00 - 11.30 | **Lesson 3:** Color choices and scales
+11.30-11.45 | *Break out session*
+11.45 - 12.15 | **Lesson 4:** Jazzing up your plot
+12.15-12.30 | *Break out session* + Conclusion
+
+
+---
+
+class: center
+
+# Get Started
+
+
+Find materials at<br><Br>
+
+
+.center[
+
+`usethis::use_course("emitanaka/datavis-workshop-ssavic", destdir="[YOUR DIRECTORY]")`
+
+.blue[<i class="fas fa-link"></i> http://emitanaka.org/datavis-workshop-ssavic/]
+]
+
+<br>
+
+
+
+.info-box[
+
+.red[**If you had any issues installing any packages or software**] go to:<br><br>
+
+.center[
+.blue[<i class="fas fa-link"></i>  [FILL]]
+]
+
+<br>
+
+and save a permanent copy to your RStudio Cloud account for the R exercises.
+
+]
+
+---
+
+
+
+
+---
+
+# Help me!
+
+
+
+
+
+---
+
+```{r endslide, child="assets/endslide.Rmd"}
+```

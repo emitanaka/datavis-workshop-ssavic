@@ -1,0 +1,85 @@
+---
+title: "Dipping your toes with<br> Data visualisation with R"
+subtitle: "Workshop Day 1"
+author: "Emi Tanaka"
+email: "dr.emi.tanaka@gmail.com"
+date: "27th Jul 2020 | Statistical Society of Australia | Zoom"
+params: 
+  cloud_link: "[FILL]"
+  slide_link: "http://emitanaka.org/datavis-workshop-ssavic/"
+output:
+  xaringan::moon_reader:
+    css: 
+      - ninjutsu
+      - "assets/animate.css"
+      - "assets/styles.css"
+      - "assets/custom.css"
+    self_contained: false
+    seal: false 
+    chakra: 'libs/remark-latest.min.js'
+    lib_dir: libs
+    includes:
+      # before_body: 
+      after_body: 
+       - "assets/loop.html"
+      # includes
+    mathjax: "assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    nature:
+      highlightStyle: github 
+      highlightLanguage: r 
+      highlightLines: true
+      highlightSpans: false 
+      countIncrementalSlides: false
+      slideNumberFormat: '%current%/%total%'
+      navigation:
+        scroll: false 
+        touch: true
+        click: false
+      ratio: '16:9' 
+---
+
+
+layout: true
+background-size: cover
+class: hide-slide-number middle center title-page
+
+
+<br>
+
+{{content}}
+
+
+<div class="bottom_abs shade_black center">
+
+`r rmarkdown::metadata$author` `r anicon::faa("twitter", animate="float", speed="fast")`  @statsgen  <br>
+
+<!-- <i class="fas fa-link"></i>  -->
+<!-- `r params$cloud_link` -->
+
+<i class="fas fa-book-open"></i>
+`r params$slide_link` <br>
+
+`r rmarkdown::metadata$date`
+
+
+</div>
+
+
+
+---
+
+background-image: url("images/bg1.jpg")
+
+<h1 style="text-shadow: 2px 2px 3px black;color:yellow;">Welcome to</h1>
+<h1 style="text-shadow: 2px 2px 30px white;">`r rmarkdown::metadata$title`</h1>
+
+
+
+
+---
+
+background-image: url("images/bg2.jpg")
+
+<h1 style="text-shadow: 2px 2px 3px black;color:yellow;">Welcome to</h1>
+<h1 style="text-shadow: 2px 2px 30px white;">`r rmarkdown::metadata$title`</h1>
+
