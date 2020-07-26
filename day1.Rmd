@@ -6,10 +6,12 @@ date: "28th July 2020"
 
 ## Slides
 
-* [1]{.circle} [Grammar of Graphics](slides/day1-session1.html)
-* [2]{.circle} [Multiple layers, facetting and tidying your data](slides/day1-session2.html)
-* [3]{.circle} [Scales and color](slides/day1-session3.html)
+We recommend that you open the html slides <i class="fas fa-link"></i> with [Google Chrome web browser](https://www.google.com/intl/en_au/chrome/). 
 
+1. Grammar of Graphics [<i class="fas fa-link"></i>](slides/day1-session1.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session1.pdf)
+2. Multiple layers, facetting and tidying your data [<i class="fas fa-link"></i>](slides/day1-session2.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session2.pdf)
+3. Scales and color [<i class="fas fa-link"></i>](slides/day1-session3.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session3.pdf)
+4. Publication-ready plots [<i class="fas fa-link"></i>](slides/day1-session4.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session4.pdf)
 
 ## Exercises
 
@@ -25,6 +27,6 @@ glue::glue("
 ```
 ```
 
-* [1]{.circle} Recreate the plots using `ggplot2` <a class="tag" href="exercises/day1-exercise-01.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day1-exercise-01.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day1-exercise-01-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day1-exercise-01-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+1. Recreate the plots using `ggplot2` <a class="tag" href="exercises/day1-exercise-01.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day1-exercise-01.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day1-exercise-01-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day1-exercise-01-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
 
 

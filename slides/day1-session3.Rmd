@@ -484,6 +484,18 @@ g + scale_fill_manual(values = tritan(cols))
 
 ]
 
+---
+
+class: exercise middle hide-slide-number
+
+
+<i class="fas fa-users"></i>
+
+# <i class="fas fa-code"></i> Open `day1-exercise-03.Rmd`
+
+<center>
+`r countdown::countdown(15, class = "clock")`
+</center>
 
 
 ---
