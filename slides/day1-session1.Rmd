@@ -40,7 +40,7 @@ current_file <- knitr::current_input()
 ```
 ```{r, include = FALSE, eval = T}
 input <- fs::path_ext_set(current_file, "html")
-pagedown::chrome_print(input = input, format = "pdf", wait = 20)
+pagedown::chrome_print(input = input, format = "pdf", wait = 25)
 ```
 ```{r titleslide, child="assets/titleslide.Rmd"}
 ```

@@ -213,13 +213,19 @@ p {
   padding-left: 10px;
 }
 
-.remark-slide-content:not(.transition):not(.title-page):not(.exercise)  > h1:first-of-type{
+.remark-slide-content:not(.transition):not(.title-page):not(.exercise):not(.no-header-strip)  > h1:first-of-type{
   background-color: #006DAE;
   color: white;
   /*border-bottom: dashed 5px #0081c7;*/
   margin-top: -20px;
   text-align: center;
 }
+
+.bg-transparent {
+  background-color: transparent!important;
+}
+
+
 
 kbd {
     background-color: #eee;
@@ -320,7 +326,7 @@ a {
   width: 100%;
   padding:10px;
   background-color: #abdff7;
-  color: #0081c7;]
+  color: #0081c7;
   font-size: 18pt;
   /* border-top: solid 3px #0081c7;*/
 }
@@ -450,4 +456,8 @@ a {
 .clock.running {
   background-color: gray!important;
   border: 3px solid black;
+}
+
+.footnote a {
+  color: white!important;
 }

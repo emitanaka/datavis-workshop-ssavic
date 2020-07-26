@@ -1,0 +1,9 @@
+tidyverse
+usethis
+agridat
+catdata
+colorspace
+patchwork
+rmarkdown
+remotes
+shiny
