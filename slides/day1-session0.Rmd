@@ -1,6 +1,6 @@
 ---
 title: "Day 1: Dipping your toes into <br>Data Visualisation with R"
-subtitle: "Introduction"
+subtitle: "Getting started"
 author: "Emi Tanaka"
 email: "emi.tanaka@monash.edu"
 date: "28th July 2020 @ Statistical Society of Australia | Zoom"
@@ -25,7 +25,7 @@ output:
     lib_dir: libs
     mathjax: "assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
     nature:
-      highlightStyle: googlecode
+      highlightStyle: github
       highlightLanguage: r 
       highlightLines: true
       highlightSpans: false 
@@ -38,6 +38,13 @@ output:
       ratio: '16:9'
 ---
 
+```{r, include = FALSE}
+current_file <- knitr::current_input()
+```
+```{r, include = FALSE, eval = T}
+input <- fs::path_ext_set(current_file, "html")
+pagedown::chrome_print(input = input, format = "pdf", wait = 25)
+```
 ```{r titleslide, child="assets/titleslide.Rmd"}
 ```
 
@@ -130,14 +137,19 @@ Monash University
 class: center middle
 
 
-.font_large[Introduce yourself in the chat!]
+<i class="fas fa-user-alt monash-blue font_large animated bounce"></i>
+
+.font_large.monash-blue[Introduce yourself in the chat!]
 
 <br>
 
-* What's your profession?  
-* Where do you live?
-* What's your hobby? 
-* What's would you like to people to know about you? 
+What's your profession?  
+
+Where do you live?
+
+What's your hobby? 
+
+What's would you like for people to know about you? 
 
 
 
@@ -150,47 +162,42 @@ class: center middle
 Time | Activity 
 :----|:---
 8.30-9.00 | Registration + Installation Help
-9.00-9.30 | **Lesson 1:** Introduction + Tidy data
+9.00-9.30 | **Lesson 1:** Getting started with grammar of graphics
 9.30-9.45 |  *Break out session*
-9.45-10.15 | **Lesson 2:**  Basics of `ggplot2`
+9.45-10.15 | **Lesson 2:**  Multiple layers, facetting and tidying your data
 10.15-10.30 | *Break out session*
 10.30 - 11.00 | *Coffee Break*
-11.00 - 11.30 | **Lesson 3:** Color choices and scales
+11.00 - 11.30 | **Lesson 3:** Scales and color
 11.30-11.45 | *Break out session*
-11.45 - 12.15 | **Lesson 4:** Jazzing up your plot
-12.15-12.30 | *Break out session* + Conclusion
+11.45 - 12.15 | **Lesson 4:** Publication-ready plots
+12.15-12.30 | *Break out session* 
 
 
 ---
 
-class: center
 
-# Get Started
+# Getting Started
 
-
-Find materials at<br><Br>
-
+```r
+usethis::use_course("emitanaka/datavis-workshop-ssavic", 
+                    destdir="[YOUR DIRECTORY]")
+```
 
 .center[
 
-`usethis::use_course("emitanaka/datavis-workshop-ssavic", destdir="[YOUR DIRECTORY]")`
 
-.blue[<i class="fas fa-link"></i> http://emitanaka.org/datavis-workshop-ssavic/]
+
+.blue.font_large[<i class="fas fa-globe"></i> http://emitanaka.org/datavis-workshop-ssavic/]
 ]
-
-<br>
-
 
 
 .info-box[
 
-.red[**If you had any issues installing any packages or software**] go to:<br><br>
-
+.red[**If you had any issues installing any packages or software**] go to:<br>
 .center[
-.blue[<i class="fas fa-link"></i>  [FILL]]
+.blue[<i class="fas fa-link"></i>  https://rstudio.cloud/project/1487877]
 ]
 
-<br>
 
 and save a permanent copy to your RStudio Cloud account for the R exercises.
 
@@ -198,14 +205,27 @@ and save a permanent copy to your RStudio Cloud account for the R exercises.
 
 ---
 
-
-
-
----
+class: center
 
 # Help me!
 
+<br><br>
 
+You can write in the chat.
+
+<br>
+
+You can ask (unmute yourself).
+
+<br>
+
+You can raise hand from zoom under Participants.
+
+<img src="images/zoom-help.png">
+
+<br>
+
+We'll come around in breakout sessions.
 
 
 
