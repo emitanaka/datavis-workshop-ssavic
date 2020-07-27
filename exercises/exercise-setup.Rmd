@@ -39,4 +39,7 @@ knitr::knit_hooks$set(class = function(before, options, envir) {
     "</div>"
   }
 })
+knitr::opts_chunk$set(
+  fig.path = "images/"
+)
 ```
