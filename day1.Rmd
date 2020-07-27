@@ -8,6 +8,7 @@ date: "28th July 2020"
 
 We recommend that you open the html slides <i class="fas fa-link"></i> with [Google Chrome web browser](https://www.google.com/intl/en_au/chrome/). 
 
+0. Getting started [<i class="fas fa-link"></i>](slides/day1-session0.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session0.pdf)
 1. Grammar of Graphics [<i class="fas fa-link"></i>](slides/day1-session1.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session1.pdf)
 2. Multiple layers, facetting and tidying your data [<i class="fas fa-link"></i>](slides/day1-session2.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session2.pdf)
 3. Scales and color [<i class="fas fa-link"></i>](slides/day1-session3.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session3.pdf)

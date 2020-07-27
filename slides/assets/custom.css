@@ -2,3 +2,7 @@
 .display.dataTable {
   font-size: 15pt;
 }
+
+.monash-bg-blue a {
+  color: white!important;
+}
