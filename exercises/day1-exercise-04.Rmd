@@ -1,0 +1,74 @@
+---
+title: "Exercise 4: Jazzy plots"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+Push the `knit` button!
+
+
+```{r setup, child="exercise-setup.Rmd"}
+```
+```{r pkgs, message = FALSE, warning = FALSE}
+library(tidyverse) # contains ggplot2, dplyr, tidyr, etc
+library(scales)
+library(colorspace)
+library(agridat) # for datasets
+```
+
+## `hazell.vegetables` dataset
+
+```{r hazell-vegetables}
+glimpse(hazell.vegetables)
+```
+
+### Exercise 4.1
+
+```{r day1-exercise-04-01, echo = F, class = "target"}
+knitr::include_graphics("images/day1-exercise-04/day1-exercise-01-1.png")
+```
+
+* This is a jazzy plot version of Exercise 3.3 plot.
+
+```{r day1-exercise-04-01s}
+# add your code here!
+```
+
+## `heady.fertilizer` dataset
+
+```{r heady-fertilizer}
+glimpse(heady.fertilizer)
+```
+
+### Exercise 4.2
+
+```{r day1-exercise-04-02, echo = F, class = "target"}
+knitr::include_graphics("images/day1-exercise-04/day1-exercise-02-1.png")
+```
+
+* The plot background color is `#CCDFDD`.
+
+```{r day1-exercise-04-02s}
+# add your code here!
+```
+
+## `wallace.iowaland` dataset
+
+```{r wallace-iowaland}
+glimpse(wallace.iowaland)
+```
+
+
+### Exercise 4.3
+
+```{r day1-exercise-04-03, echo = F, class = "target"}
+knitr::include_graphics("images/day1-exercise-04/day1-exercise-03-1.png")
+```
+
+* Note: the diverging palette used is `Green-Brown` from `colorspace` with mid-point as average of the yield. 
+
+```{r day1-exercise-04-03s}
+# add your code here!
+```

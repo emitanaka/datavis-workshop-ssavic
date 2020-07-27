@@ -1,5 +1,5 @@
 ---
-title: "Exercise 1 Solution: Recreate the plots using `ggplot2`"
+title: "Exercise 1 Solution: Mastering the `geom`s"
 output:
   html_document:
     toc: true
@@ -18,78 +18,78 @@ heart2 <- heart %>%
   mutate(family_history = ifelse(famhist==1, "Yes", "No"),
          heart_disease = ifelse(y==1, "Yes", "No"))
 knitr::opts_chunk$set(
-  fig.path = "day1-exercise-01/",
+  fig.path = "images/day1-exercise-01/",
   class.source = "solution"
 )
 ```
 
-## Exercise 1: Scatterplot
+## Exercise 1.1: Scatterplot
 
-```{r exercise-01}
+```{r day1-exercise-01}
 ggplot(crampton.pig, aes(weight1, weight2, color = treatment, size = feed)) + 
   geom_point()
 ```
 
-## Exercise 2: Tile plot
+## Exercise 1.2: Tile plot
 
-```{r exercise-02}
+```{r day1-exercise-02}
 ggplot(crampton.pig, aes(rep, treatment, fill = weight2 - weight1)) + 
   geom_tile(color = "black", size = 2)
 ```
 
-## Exercise 3: Density plot
+## Exercise 1.3: Density plot
 
-```{r exercise-03}
+```{r day1-exercise-03}
 ggplot(crampton.pig, aes(weight2 - weight1, fill = treatment)) + 
   geom_density(alpha = 0.7) 
 ```
 
-## Exercise 4: Grouped barplot
+## Exercise 1.4: Grouped barplot
 
-```{r exercise-04}
+```{r day1-exercise-04}
 ggplot(crampton.pig, aes(treatment, feed, fill = rep)) + 
   geom_col(position = "dodge")
 ```
 
-## Exercise 5: Rose plot
+## Exercise 1.5: Rose plot
 
-```{r exercise-05}
+```{r day1-exercise-05}
 ggplot(crampton.pig, aes(treatment, feed, fill = rep)) + 
   geom_col(position = "dodge") + coord_polar("x")
 ```
 
-## Exercise 6: Boxplot
+## Exercise 1.6: Boxplot
 
-```{r exercise-06}
+```{r day1-exercise-06}
 ggplot(heart2, aes(heart_disease, obesity, fill = family_history)) + 
   geom_boxplot()
 ```
 
-## Exercise 7: Dotplot
+## Exercise 1.7: Dotplot
 
-```{r exercise-07}
+```{r day1-exercise-07}
 ggplot(heart2, aes(heart_disease, obesity, fill = family_history)) + 
   geom_dotplot(binaxis = "y", stackdir = "center",
                position = "dodge")
 ```
 
-## Exercise 8: Violin plot
+## Exercise 1.8: Violin plot
 
-```{r exercise-08}
+```{r day1-exercise-08}
 ggplot(heart2, aes(heart_disease, obesity, fill = family_history)) + 
   geom_violin()
 ```
 
-## Exercise 9: 2D density plot
+## Exercise 1.9: 2D density plot
 
-```{r exercise-09}
+```{r day1-exercise-09}
 ggplot(heart2, aes(age, obesity)) + 
   geom_density_2d_filled()
 ```
 
-## Exercise 10: Hexagonal heatmap
+## Exercise 1.10: Hexagonal heatmap
 
-```{r exercise-10}
+```{r day1-exercise-10}
 ggplot(heart2, aes(age, obesity)) + 
   geom_hex()
 ```
