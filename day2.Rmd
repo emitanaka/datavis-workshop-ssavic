@@ -8,6 +8,12 @@ date: "29th July 2020"
 
 We recommend that you open the html slides <i class="fas fa-link"></i> with [Google Chrome web browser](https://www.google.com/intl/en_au/chrome/). 
 
+0. Getting started [<i class="fas fa-link"></i>](slides/day2-session0.html) [<i class="fas fa-file-pdf"></i>](slides/day2-session0.pdf)
+1. Review of Grammar of Graphics [<i class="fas fa-link"></i>](slides/day2-session1.html) [<i class="fas fa-file-pdf"></i>](slides/day2-session1.pdf)
+2. Making maps [<i class="fas fa-link"></i>](slides/day2-session2.html) [<i class="fas fa-file-pdf"></i>](slides/day2-session2.pdf)
+3. Getting your plots <br> to talk back [<i class="fas fa-link"></i>](slides/day2-session3.html) [<i class="fas fa-file-pdf"></i>](slides/day2-session3.pdf)
+4. Determining the best plot design [<i class="fas fa-link"></i>](slides/day2-session4.html) [<i class="fas fa-file-pdf"></i>](slides/day2-session4.pdf)
+
 ## Schedule
 
 Time | Activity 

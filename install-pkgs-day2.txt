@@ -10,3 +10,4 @@ nullabor
 rmarkdown
 remotes
 shiny
+RColorBrewer
