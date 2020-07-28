@@ -29,10 +29,19 @@ Before getting started, you will need to install the following R-packages:
 
 ```r
 ```{r, echo = FALSE, results='asis'}
-pkgs <- readLines("install-pkgs-day1.txt")
+pkgs <- readLines("install-pkgs-day2.txt")
 pkgsq <- paste0("'", pkgs, "'")
 glue::glue("
   install.packages(c( {paste0(pkgsq, collapse=',\\n\\t\\t\\t\\t\\t')}))
   ")
 ```
 ```
+
+1. Review of Grammar of Graphics <a class="tag" href="exercises/day2-exercise-01.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day2-exercise-01.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day2-exercise-01-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day2-exercise-01-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+
+2. Making maps <a class="tag" href="exercises/day2-exercise-02.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day2-exercise-02.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day2-exercise-02-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day2-exercise-02-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+
+
+3. Getting your plots to talk back <a class="tag" href="exercises/day2-exercise-03.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day2-exercise-03.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day2-exercise-03-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day2-exercise-03-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+
+4. Determining the best plot design <a class="tag" href="exercises/day2-exercise-04.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day2-exercise-04.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day2-exercise-04-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day2-exercise-04-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
