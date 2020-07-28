@@ -1,0 +1,259 @@
+---
+title: "Data Visualization with R <br> Workshop Day 2"
+subtitle: Review of Grammar of Graphics
+author: "Di Cook"
+email: "dicook@monash.edu"
+date: "29th July 2020 @ Statistical Society of Australia | Zoom"
+length: "360 minutes"
+color_theme: "yellow"
+pdflink: "day2session0.pdf"
+titleslide_bgimg: "images/d2bg3.jpg"
+output:
+  xaringan::moon_reader:
+    css:
+      - ninjutsu 
+      - "assets/animate.css"
+      - "assets/styles2.css"
+      - "assets/fira-code.css"
+      - "assets/monash-brand.css"
+      - "assets/boxes.css"
+      - "assets/custom.css"
+    self_contained: false 
+    seal: false 
+    chakra: 'libs/remark-latest.min.js'
+    lib_dir: libs
+    mathjax: "assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    nature:
+      highlightStyle: github
+      highlightLanguage: r 
+      highlightLines: true
+      highlightSpans: false 
+      countIncrementalSlides: false
+      slideNumberFormat: '%current%/%total%'
+      navigation:
+        scroll: false 
+        touch: true
+        click: false
+      ratio: '16:9'
+---
+
+```{r, include = FALSE}
+current_file <- knitr::current_input()
+```
+```{r, include = FALSE, eval = F}
+input <- fs::path_ext_set(current_file, "html")
+pagedown::chrome_print(input = input, format = "pdf", wait = 25)
+```
+```{r titleslide, child="assets/titleslide2.Rmd"}
+```
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.path = "images/day2-session1/",
+  fig.width = 6,
+  fig.height = 4,
+  fig.align = "center",
+  out.width = "100%",
+  fig.retina = 3,
+  warning = FALSE,
+  message = FALSE,
+  cache = FALSE
+)
+library(tidyverse)
+filter <- dplyr::filter
+select <- dplyr::select
+```
+
+---
+class: font_smaller
+
+# <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Who_logo.svg" width="50px" style="vertical-align: middle;"> Tuberculosis incidence
+
+The TB data is from the [WHO]( https://www.who.int/tb/country/data/download/en/). 
+
+.font_small[
+```{r echo=FALSE}
+tb <- tb <- read_csv(here::here("data/TB_notifications_2020-07-01.csv")) %>% 
+  select(country, iso3, year, new_sp_m04:new_sp_fu) 
+tb %>% 
+  filter(country %in% c("Australia", "New Zealand")) %>% 
+  DT::datatable(width=1150, height=100)
+```
+]
+
+<div class="tag center animated rubberBand" style="position:absolute;top:2%;left:12%;transform:rotate(-3deg);">
+demo data for today
+</div>
+
+---
+class: myquestion middle
+
+- Is the data in tidy form?
+--
+
+- What are the variables in this data?
+--
+
+- How many variables are there?
+--
+
+country (name, iso3), year, sex, age
+
+---
+class: center
+#  <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Who_logo.svg" width="50px" style="vertical-align: middle;"> Tidying the data
+
+.font_small[
+```{r tbtidy, echo=FALSE}
+tb <- read_csv(here::here("data/TB_notifications_2020-07-01.csv")) %>% 
+  select(country, iso3, year, new_sp_m04:new_sp_fu) %>%
+  pivot_longer(cols = new_sp_m04:new_sp_fu, names_to = "sexage", values_to = "count") %>%
+  mutate(sexage = str_replace(sexage, "new_sp_", "")) %>%
+  mutate(sex=substr(sexage, 1, 1), 
+         age=substr(sexage, 2, length(sexage))) %>%
+  filter(!(age %in% c("04", "014", "514", "u"))) %>% # duplication
+  filter(year > 1996, year < 2013) %>% # missings and re-deefinition
+  mutate(age_group = factor(age, # re-ecode
+                            labels = c("15-24", "25-34", "35-44", 
+                                       "45-54", "55-64", "65-"))) %>%
+  select(country, year, age_group, sex, count)
+
+# Select Australia
+tb_oz <- tb %>% 
+  filter(country == "Australia")
+
+tb_oz %>% 
+  DT::datatable(width = 1150, height = 100)
+```
+]
+
+---
+
+.font_small[
+```{r tb_bar_prop, fig.show='hide'}
+ggplot(tb_oz, aes(x = year, y = count, fill = sex)) +
+  geom_bar(stat = "identity", position = "fill") + #<<
+  facet_wrap(~age_group, ncol = 6) +
+  scale_fill_brewer(name = "Sex", palette = "Dark2") +
+  ylab("Proportion")
+```
+
+<br>
+<br>
+```{r ref.label='tb_bar_prop', echo=FALSE, fig.width=10, fig.height=3, out.width="90%"}
+```
+]
+---
+#  <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Who_logo.svg" width="50px" style="vertical-align: middle;"> What do we learn?
+
+- Generally, proportion is higher for males
+--
+
+- Relative proportion is higher for older males 
+--
+
+- Quite variable proportions from year to year
+--
+
+<br>
+<br>
+<br>
+What don't we learn from this plot?
+
+```{r eval=FALSE, echo=FALSE}
+Counts are completely lost
+```
+
+---
+
+.font_small[
+```{r tb_count_trend, fig.show='hide'}
+ggplot(tb_oz, aes(x = year, y = count, colour = sex)) +
+  geom_point() + #<<
+  geom_smooth(se = F) + #<<
+  facet_wrap(~age_group, ncol = 6) +
+  scale_colour_brewer(name = "Sex", palette = "Dark2") 
+```
+
+<br>
+<br>
+```{r ref.label='tb_count_trend', echo=FALSE, fig.width=10, fig.height=3, out.width="90%"}
+```
+]
+
+---
+#  <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Who_logo.svg" width="50px" style="vertical-align: middle;"> What do we learn?
+
+- Generally, counts are quite varied from year to year, but relatively stable
+--
+
+- Increasing trend in counts for both males and females under 35 
+--
+
+- Counts for males almost always higher than females
+
+--
+
+---
+
+.font_small[
+```{r tb_pie, fig.show='hide'}
+tb_oz %>%
+  filter(year == 2010) %>%
+  ggplot(aes(x = 1, y = count, fill = sex)) +
+    geom_bar(stat = "identity", position = "fill") + #<<
+    facet_wrap(~age_group, ncol = 6) +
+    scale_fill_brewer(name = "Sex", palette = "Dark2") +
+    xlab("") + ylab("") +
+    coord_polar(theta = "y") #<<
+```
+
+<br>
+<br>
+```{r ref.label='tb_pie', echo=FALSE, fig.width=10, fig.height=3, out.width="90%"}
+```
+]
+
+---
+#  <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Who_logo.svg" width="50px" style="vertical-align: middle;"> What do we learn?
+
+In 2010,
+
+- there were almost no 45-54 year old women with TB
+--
+
+- there were more 24-35 year old women with TB than men
+--
+
+- generally more males than females had TB
+
+--
+
+---
+class: question middle center
+
+How many plots should you usually do?
+--
+
+Lots
+
+
+---
+
+
+class: exercise middle hide-slide-number
+
+
+<i class="fas fa-users"></i>
+
+# <i class="fas fa-code"></i> Open `day2-exercise-01.Rmd`
+
+<center>
+`r countdown::countdown(15, class = "clock")`
+</center>
+
+
+---
+
+```{r endslide, child="assets/endslide.Rmd"}
+```
+

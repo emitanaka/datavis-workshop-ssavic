@@ -2,8 +2,9 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600);
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
+
 .remark-slide-content {
-  padding: 0 0 0 0;
+  padding: 0px 0 0px 0px;
 }
 
 .remark-slide-content > :not(div) {
@@ -184,6 +185,7 @@ h6 { font-size:28pt!important; }
 .font_small .remark-code { font-size: 18pt;}
 .font_smaller .remark-code { font-size: 16pt }
 .font_smaller2 .remark-code { font-size: 13pt }
+.font_large .remark-code { font-size: 30pt;}
 
 
 li { margin: 10px 0; }
@@ -287,6 +289,10 @@ ul {
   color: white;
   text-align: center;
   font-size: 50pt!important;
+}
+
+.question {
+  background-color: #006DAE;
 }
 
 .transition > h1 {
@@ -464,4 +470,27 @@ a {
 
 .footnote a {
   color: white!important;
+}
+
+.pull-left {
+  padding-top: 20px;
+  float: left;
+  width: 47%;
+}
+.pull-right {
+  padding-top: 20px;
+  float: right;
+  width: 47%;
+}
+
+.left-code {
+  color: #777;
+  width: 48%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 50%;
+  float: right;
+  padding-left: 1%;
 }
