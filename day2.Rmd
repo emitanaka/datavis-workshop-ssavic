@@ -1,5 +1,38 @@
 ---
 title: "Day 2: Diving Deeper into Data Visualization with R"
 author: "Di Cook"
-date: "28th July 2020"
+date: "29th July 2020"
 ---
+
+## Slides
+
+We recommend that you open the html slides <i class="fas fa-link"></i> with [Google Chrome web browser](https://www.google.com/intl/en_au/chrome/). 
+
+## Schedule
+
+Time | Activity 
+:----|:---
+8.30-9.00 | Registration + Installation Help
+9.00-9.30 | **Lesson 1:** Check your `ggplot2` knowledge
+9.30-9.45 |  *Break out session*
+9.45-10.15 | **Lesson 2:** Making maps 
+10.15-10.30 | *Break out session*
+10.30 - 11.00 | *Coffee Break*
+11.00 - 11.30 | **Lesson 3:** Getting your plots to talk back 
+11.30-11.45 | *Break out session*
+11.45 - 12.15 | **Lesson 4:** Determining best plot design
+12.15-12.30 | *Break out session* + Conclusion
+
+## Exercises
+
+Before getting started, you will need to install the following R-packages:
+
+```r
+```{r, echo = FALSE, results='asis'}
+pkgs <- readLines("install-pkgs-day1.txt")
+pkgsq <- paste0("'", pkgs, "'")
+glue::glue("
+  install.packages(c( {paste0(pkgsq, collapse=',\\n\\t\\t\\t\\t\\t')}))
+  ")
+```
+```

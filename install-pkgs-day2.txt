@@ -1,0 +1,12 @@
+tidyverse
+ggthemes
+viridis
+ggmap
+sf
+leaflet
+plotly
+gganimate
+nullabor
+rmarkdown
+remotes
+shiny
