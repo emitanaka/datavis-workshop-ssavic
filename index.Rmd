@@ -5,7 +5,7 @@ date: "28-29th July 2020"
 ---
 
 
-Welcome to the Data Visulisation with R Workshop!
+Welcome to the Data Visualisation with R Workshop!
 
 This workshop is organised by [Statistical Society of Australia](https://statsoc.org.au/event-3886194) and delivered by Prof Di Cook and Dr Emi Tanaka.
 
