@@ -11,3 +11,6 @@ rmarkdown
 remotes
 shiny
 RColorBrewer
+maps
+isoband
+mapproj
