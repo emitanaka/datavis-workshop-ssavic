@@ -3,7 +3,7 @@ title:  "Data Visualisation with R<br>Workshop Day 1"
 subtitle:  "Jazzing up your plots <i class='fas fa-paint-brush'></i>"
 author: "Emi Tanaka"
 email: "emi.tanaka@monash.edu"
-date: "28th July 2020 @ Statistical Society of Australia | Online"
+date: "11th November 2020 @ Statistical Society of Australia | Online"
 length: "30 minutes"
 titleslide_bgimg: "images/element5-digital-ceWgSMd8rvQ-unsplash.jpg"
 output:
@@ -38,7 +38,7 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = T}
+```{r, include = FALSE, eval = F}
 input <- fs::path_ext_set(current_file, "html")
 pagedown::chrome_print(input = input, format = "pdf", wait = 20)
 ```

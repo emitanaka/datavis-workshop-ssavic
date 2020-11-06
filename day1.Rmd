@@ -1,7 +1,7 @@
 ---
 title: "Day 1: Dipping Your Toes into Data Visualization with R"
 author: "Emi Tanaka"
-date: "28th July 2020"
+date: "11th November 2020"
 ---
 
 ## Slides
@@ -13,6 +13,22 @@ We recommend that you open the html slides <i class="fas fa-link"></i> with [Goo
 2. Multiple layers, facetting and tidying your data [<i class="fas fa-link"></i>](slides/day1-session2.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session2.pdf)
 3. Scales and color [<i class="fas fa-link"></i>](slides/day1-session3.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session3.pdf)
 4. Publication-ready plots [<i class="fas fa-link"></i>](slides/day1-session4.html) [<i class="fas fa-file-pdf"></i>](slides/day1-session4.pdf)
+
+## Schedule
+
+Time | Activity 
+:----|:---
+8.30-9.00 | Registration + Installation Help
+9.00-9.30 | **Lesson 1:** Getting started with grammar of graphics
+9.30-9.45 |  *Break out session*
+9.45-10.15 | **Lesson 2:**  Multiple layers, facetting and tidying your data
+10.15-10.30 | *Break out session*
+10.30 - 11.00 | *Coffee Break*
+11.00 - 11.30 | **Lesson 3:** Scales and color
+11.30-11.45 | *Break out session*
+11.45 - 12.15 | **Lesson 4:** Publication-ready plots
+12.15-12.30 | *Break out session* 
+
 
 ## Exercises
 
