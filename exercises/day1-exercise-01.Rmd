@@ -9,8 +9,9 @@ output:
 Push the `knit` button!
 
 
-```{r setup, child="exercise-setup.Rmd"}
+```{r setup, child="exercise-setup.Rmd", eval = file.exists("exercise-setup.Rmd")}
 ```
+
 ```{r pkgs, message = FALSE, warning = FALSE}
 library(tidyverse) # contains ggplot2, dplyr, tidyr, etc
 library(agridat) # for `crampton.pig` data
@@ -29,9 +30,12 @@ glimpse(crampton.pig)
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-01-1.png")
 ```
 
-```{r day1-exercise-01-01s}
-# add your code here!
+```{r day1-exercise-01-01s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(crampton.pig, aes(..., ..., color = ..., size = ...)) + 
+  geom_point()
 ```
+
 
 ### Exercise 1.2: Tile plot
 
@@ -39,8 +43,10 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-01-1.png")
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-02-1.png")
 ```
 
-```{r day1-exercise-01-02s}
-# add your code here!
+```{r day1-exercise-01-02s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(crampton.pig, aes(..., ..., fill = ...)) + 
+  geom_tile(color = "black", size = 2)
 ```
 
 ### Exercise 1.3: Density plot
@@ -49,8 +55,10 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-02-1.png")
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-03-1.png")
 ```
 
-```{r day1-exercise-01-03s}
-# add your code here!
+```{r day1-exercise-01-03s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(crampton.pig, aes(..., fill = ...)) + 
+  geom_density(alpha = 0.7) 
 ```
 
 ### Exercise 1.4: Grouped barplot
@@ -59,8 +67,10 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-03-1.png")
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-04-1.png")
 ```
 
-```{r day1-exercise-01-04s}
-# add your code here!
+```{r day1-exercise-01-04s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(crampton.pig, aes(..., ..., fill = ...)) + 
+  geom_col(position = "dodge")
 ```
 
 ### Exercise 1.5: Rose plot
@@ -69,8 +79,10 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-04-1.png")
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-05-1.png")
 ```
 
-```{r day1-exercise-01-05s}
-# add your code here!
+```{r day1-exercise-01-05s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(crampton.pig, aes(..., ..., fill = ...)) + 
+  geom_col(position = "dodge") + coord_polar("x")
 ```
 
 ## `heart` dataset
@@ -92,8 +104,10 @@ glimpse(heart2)
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-06-1.png")
 ```
 
-```{r day1-exercise-01-06s}
-# add your code here!
+```{r day1-exercise-01-06s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(heart2, aes(..., ..., fill = ...)) + 
+  geom_boxplot()
 ```
 
 ### Exercise 1.7: Dotplot
@@ -102,8 +116,11 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-06-1.png")
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-07-1.png")
 ```
 
-```{r day1-exercise-01-07s}
-# add your code here!
+```{r day1-exercise-01-07s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(heart2, aes(..., ..., fill = ...)) + 
+  geom_dotplot(binaxis = "y", stackdir = "center",
+               position = "dodge")
 ```
 
 ### Exercise 1.8: Violin plot
@@ -112,8 +129,10 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-07-1.png")
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-08-1.png")
 ```
 
-```{r day1-exercise-01-08s}
-# add your code here!
+```{r day1-exercise-01-08s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(heart2, aes(..., ..., fill = ...)) + 
+  geom_violin()
 ```
 
 ### Exercise 1.9: 2D density plot
@@ -122,8 +141,10 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-08-1.png")
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-09-1.png")
 ```
 
-```{r day1-exercise-01-09s}
-# add your code here!
+```{r day1-exercise-01-09s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(heart2, aes(..., ...)) + 
+  geom_density_2d_filled()
 ```
 
 ### Exercise 1.10: Hexagonal heatmap
@@ -132,6 +153,8 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-09-1.png")
 knitr::include_graphics("images/day1-exercise-01/day1-exercise-10-1.png")
 ```
 
-```{r day1-exercise-01-10s}
-# add your code here!
+```{r day1-exercise-01-10s, eval = FALSE}
+# fill all ... and change eval = FALSE to eval = TRUE when done
+ggplot(heart2, aes(..., ...)) + 
+  geom_hex()
 ```

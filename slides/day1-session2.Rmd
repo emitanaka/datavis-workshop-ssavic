@@ -3,7 +3,7 @@ title: "Data Visualisation with R<br>Workshop Day 1"
 subtitle: "Multiple layers, facetting and tidying your data"
 author: "Emi Tanaka"
 email: "emi.tanaka@monash.edu"
-date: "28th July 2020 @ Statistical Society of Australia | Online"
+date: "11th November @ Statistical Society of Australia | Online"
 length: "30 minutes"
 titleslide_bgimg: "images/bg8.jpg"
 output:
@@ -38,7 +38,7 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = T}
+```{r, include = FALSE, eval = F}
 input <- fs::path_ext_set(current_file, "html")
 pagedown::chrome_print(input = input, format = "pdf", wait = 20)
 ```
@@ -475,7 +475,7 @@ How I wrangled this data
 ```
 
 <div class="font_small">
-(note: teaching wrangling is not part of this workshop, please see <a href="https://biometrics2019.netlify.app/session2.html" target="_blank">here</a> if you want to learn more or please request SSA you would like a workshop on data wrangling)
+(note: teaching wrangling is not part of this workshop, please see <a href="https://biometrics2019.netlify.app/session2.html" target="_blank">here</a> if you want to learn more, or register for workshop on data wrangling <a href="https://www.statsoc.org.au/event-4012234">here</a>)
 </div>
 
 ---
@@ -536,29 +536,26 @@ class: font_smaller
 .grid[
 .item[
 
-```{r, fig.height = 3.5, echo = T}
-trtmean_df <- crampton.pig2 %>% 
-  group_by(treatment) %>%
-  summarise(
-    diff = mean(weight2 - weight1))
+Plot you may want:
 
-trtmean_df
+```{r diff-plot, fig.height = 3.5, echo = F}
+fig <- ggplot(crampton.pig2, 
+              aes(treatment, 
+                  weight2 - weight1)) + 
+  geom_point(size = 3) + 
+  stat_summary(fun.data = mean_se, 
+               geom = "pointrange", fatten = 2,
+               color = "#027EB6", size = 3) +
+  stat_summary(fun = mean, geom = "line", 
+               group = 1, color = "#027EB6",
+               size = 2)
+fig
 ```
 
 ]
 .item[
 
-Plot you may want:
 
-```{r diff-plot, fig.height = 3.5, echo = F}
-fig <- ggplot(trtmean_df, aes(treatment, diff)) + 
-  geom_point(data = crampton.pig2, size = 3,
-             aes(y = weight2 - weight1)) + 
-  geom_point(color = "#027EB6", size = 6) + 
-  geom_line(color = "#027EB6", size = 1.5,
-            group = 1)
-fig
-```
 
 {{content}}
 
@@ -569,7 +566,7 @@ fig
 
 One way to do this:
 
-```{r diff-plot, eval = F, echo=-7}
+```{r diff-plot, eval = F, echo=-11}
 ```
 
 
@@ -590,8 +587,9 @@ class: font_smaller
 ```{r, fig.height = 4, fig.width = 5}
 fig + 
   geom_text(data = data.frame(treatment = 4.5,
-                              diff = 185),
-            aes(label = "Treatment\n means"),
+                              weight2 = 185,
+                              weight1 = 0),
+            label = "Treatment\n means",
             size = 3,
             color = "#027EB6", 
             fontface = "bold") 
