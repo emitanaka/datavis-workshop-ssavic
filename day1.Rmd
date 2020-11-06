@@ -52,3 +52,4 @@ glue::glue("
 3. Playing with scales and color <a class="tag" href="exercises/day1-exercise-03.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day1-exercise-03.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day1-exercise-03-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day1-exercise-03-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
 
 4. Jazzy plots <a class="tag" href="exercises/day1-exercise-04.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day1-exercise-04.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day1-exercise-04-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day1-exercise-04-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+
