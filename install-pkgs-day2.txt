@@ -8,14 +8,11 @@ viridis
 ggmap
 sf
 ozmaps
-tsibble
-tsibbletalk
 leaflet
 plotly
 gganimate
 nullabor
 cartogram
-sugarbag
 maps
 isoband
 mapproj
