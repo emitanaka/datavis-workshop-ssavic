@@ -16,3 +16,4 @@ cartogram
 maps
 isoband
 mapproj
+gapminder
