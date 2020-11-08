@@ -16,3 +16,6 @@ gganimate
 nullabor
 cartogram
 sugarbag
+maps
+isoband
+mapproj
