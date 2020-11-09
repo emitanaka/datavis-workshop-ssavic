@@ -494,3 +494,33 @@ a {
   float: right;
   padding-left: 1%;
 }
+
+.panelset {
+  font-size: 18pt;
+  list-style: none;
+   --panel-tab-active-border-color: transparent;
+   --panel-tab-inactive-opacity: 0.8;
+   --panel-tabs-border-bottom: transparent;
+}
+
+.panel-tab {
+  padding: 10px 10px!important;
+}
+
+.panelset .panel-tabs {
+  box-shadow: none!important;
+}
+
+ul.panel-tabs {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+li.panel-tab {
+  margin: 0;
+  font-size: 12pt;
+}
+
+.panel-tab {
+  min-height: 0!important;
+}

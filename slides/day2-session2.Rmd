@@ -1,0 +1,740 @@
+---
+title: "Data Visualization with R <br> Workshop Day 2"
+subtitle: Making maps
+author: "Di Cook"
+email: "dicook@monash.edu"
+date: "12th Nov 2020 @ Statistical Society of Australia | Zoom"
+length: "360 minutes"
+color_theme: "yellow"
+pdflink: "day2-session2.pdf"
+titleslide_bgimg: "images/d2bg5.jpg"
+output:
+  xaringan::moon_reader:
+    css:
+      - ninjutsu 
+      - "assets/animate.css"
+      - "assets/styles2.css"
+      - "assets/fira-code.css"
+      - "assets/monash-brand.css"
+      - "assets/boxes.css"
+      - "assets/custom.css"
+      - "assets/panelset.css"
+    self_contained: false 
+    seal: false 
+    chakra: 'libs/remark-latest.min.js'
+    lib_dir: libs
+    mathjax: "assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    nature:
+      highlightStyle: github
+      highlightLanguage: r 
+      highlightLines: true
+      highlightSpans: false 
+      countIncrementalSlides: false
+      slideNumberFormat: '%current%/%total%'
+      navigation:
+        scroll: false 
+        touch: true
+        click: false
+      ratio: '16:9'
+---
+
+```{r, include = FALSE}
+current_file <- knitr::current_input()
+```
+```{r, include = FALSE, eval = F}
+input <- fs::path_ext_set(current_file, "html")
+pagedown::chrome_print(input = input, format = "pdf", wait = 25)
+```
+```{r titleslide, child="assets/titleslide.Rmd"}
+```
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.path = "images/day2-session2/",
+  fig.width = 6,
+  fig.height = 4,
+  fig.align = "center",
+  out.width = "100%",
+  fig.retina = 3,
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  cache = FALSE
+)
+```
+
+```{r, include = FALSE}
+library(tidyverse)
+filter <- dplyr::filter
+select <- dplyr::select
+library(ggthemes)
+library(viridis)
+library(ggmap)
+library(sf)
+library(cartogram)
+library(readxl)
+library(plotly)
+library(ozmaps)
+library(lubridate)
+xaringanExtra::use_panelset()
+```
+
+---
+class: font_smaller
+
+# <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Who_logo.svg" width="50px" style="vertical-align: middle;"> Tuberculosis incidence
+
+The TB data is from the [WHO]( https://www.who.int/tb/country/data/download/en/). 
+
+```{r tbtidy, echo=FALSE}
+tb <- read_csv(here::here("data/TB_notifications_2020-07-01.csv")) %>% 
+  dplyr::select(country, iso3, year, new_sp_m04:new_sp_fu) %>%
+  pivot_longer(cols=new_sp_m04:new_sp_fu, names_to="sexage", values_to="count") %>%
+  mutate(sexage = str_replace(sexage, "new_sp_", "")) %>%
+  mutate(sex=substr(sexage, 1, 1), 
+         age=substr(sexage, 2, length(sexage))) %>%
+  dplyr::select(-sexage) %>%
+  filter(!(age %in% c("04", "014", "514", "u"))) %>%
+  filter(year > 1996, year < 2013) %>%
+  mutate(age_group = factor(age, 
+                            labels = c("15-24", "25-34", "35-44", 
+                                       "45-54", "55-64", "65-"))) %>%
+  dplyr::select(country, year, age_group, sex, count)
+tb
+```
+
+---
+class: question
+
+What is a choropleth map?
+--
+
+<br>
+
+Why use a choropleth map?
+--
+
+---
+# How do we get a map?
+
+A polygon map of the world can be extracted from the `maps` package. 
+
+.font_small[
+```{r worldmap}
+world_map <- map_data("world")
+world_map %>% 
+  filter(region %in% c("Australia", "New Zealand")) %>% 
+      DT::datatable(width=1150, height=100)
+```
+]
+
+---
+# Maps are basically groups of connected dots
+
+.pull-left[
+<br>
+<br>
+
+These are the points, defining the country boundary for Australia
+
+.font_small[
+```{r oz_points, fig.show='hide'}
+oz <- world_map %>% 
+  filter(region == "Australia")
+ggplot(oz, aes(x = long, y = lat)) + 
+  geom_point() + 
+  coord_map() #<<
+```
+]
+]
+
+.pull-right[
+
+<br>
+<br>
+
+```{r ref.label="oz_points", echo=FALSE, out.width="110%"}
+```
+]
+
+---
+
+.pull-left[
+<br>
+<br>
+Connect the dots
+
+.font_small[
+```{r oz_lines, fig.show='hide'}
+ggplot(oz, aes(x = long, y = lat, 
+               group = group)) + 
+  geom_point() + 
+  geom_line() + #<<
+  coord_map()
+```
+]
+
+`r anicon::nia("What happened?", animate="tada")`
+]
+
+.pull-right[
+<br>
+<br>
+
+```{r ref.label="oz_lines", echo=FALSE, out.width="110%"}
+```
+]
+---
+
+.pull-left[
+<br>
+<br>
+
+Connect the dots
+
+.font_small[
+```{r oz_path, fig.show='hide'}
+ggplot(oz, aes(x = long, y = lat, 
+               group = group)) + 
+  geom_point() + 
+  geom_path() + #<<
+  coord_map()
+```
+]
+]
+
+.pull-right[
+<br>
+<br>
+
+```{r ref.label="oz_path", echo=FALSE, out.width="110%"}
+```
+]
+
+---
+
+.pull-left[
+This map doesn't have states and territory connections.
+
+.font_small[
+```{r oz_state, fig.show='hide'}
+ggplot(oz, aes(x = long, y = lat, 
+               group = subregion)) + #<<
+  geom_path() + 
+  coord_map()
+```
+]
+]
+
+.pull-right[
+
+```{r ref.label="oz_state", echo=FALSE, out.width="110%"}
+```
+]
+
+---
+
+.pull-left[
+We can also plot the map using `geom_polygon`, and fill with colour.
+
+.font_small[
+```{r oz_polygon, fig.show='hide'}
+ggplot(oz, aes(x = long, y = lat, 
+               group = group)) + 
+  geom_polygon() + #<<
+  coord_map() 
+```
+]
+]
+
+.pull-right[
+
+```{r ref.label="oz_polygon", echo=FALSE, out.width="110%"}
+```
+]
+
+```{r eval=FALSE, echo=FALSE}
+# Exercise 1, fill with a different colour
+```
+
+---
+
+.pull-left[
+Using a map theme makes the result look more map like
+
+.font_small[
+```{r oz_theme, fig.show='hide'}
+ggplot(oz, aes(x = long, y = lat, 
+               group = group)) + 
+  geom_polygon() + 
+  coord_map() +
+  theme_map() #<<
+```
+]
+]
+
+.pull-right[
+
+```{r ref.label="oz_theme", echo=FALSE, out.width="110%"}
+```
+
+]
+---
+class: transition middle animated slideInLeft
+
+# Let's make a choropleth map of tuberculosis
+
+---
+
+Aggregate counts across sex and age group for 2012
+
+.font_small[
+```{r tb_map_gaps, fig.show='hide'}
+tb_2012 <- tb %>%
+  filter(year == 2012) %>%
+  rename(region = country) %>%
+  group_by(region) %>%
+  summarise(count = sum(count))
+ggplot(tb_2012, aes(map_id = region)) + 
+    geom_map(aes(fill = count), map = world_map,  #<<
+             color="grey70", size = 0.1, na.rm = TRUE) +  #<<
+    expand_limits(x = world_map$long, y = world_map$lat) +
+    scale_fill_viridis("Count") +
+    theme_map() 
+```
+]
+
+---
+
+```{r ref.label='tb_map_gaps', echo=FALSE, out.width="100%", fig.width=12, fig.height=5.5}
+```
+
+---
+class: question middle
+
+.font_large[What happened to the USA? UK?]
+
+---
+
+# Check the name matching
+
+.font_small[
+```{r}
+wm_names <- world_map %>% 
+  select(region) %>% 
+  distinct()
+tb_names <- tb %>% 
+  filter(year == 2012) %>% 
+  select(country) %>% 
+  distinct()
+tb_miss_from_wm <- anti_join(tb_names, wm_names,
+                             by=c("country" = "region")) #<<
+DT::datatable(tb_miss_from_wm, width = 1150, height = 100)
+```
+]
+
+---
+
+.font_small[
+```{r}
+tb_fixed <- tb %>% 
+  mutate(region=recode(country, 
+                       "United States of America" = "USA", 
+                       "United Kingdom of Great Britain and Northern Ireland" = "UK",
+                       "Russian Federation" = "Russia",
+                       "Viet Nam" = "Vietnam",
+                       "Venezuela (Bolivarian Republic of)" = "Venezuela",
+                       "Bolivia (Plurinational State of)" = "Bolivia",
+                       "Czechia" = "Czech Republic",
+                       "Iran (Islamic Republic of)" = "Iran",
+                       "Iran (Islamic Republic of)" = "Laos",
+                       "Democratic People's Republic of Korea" = "North Korea",
+                       "Republic of Korea" = "South Korea",
+                       "United Republic of Tanzania" = "Tanzania",
+                       "Congo" = "Republic of Congo"))
+```
+]
+
+---
+
+`r emo::ji("smile")` `r anicon::nia("Try again!", animate="bounce")`
+
+.font_small[
+```{r tb_mapgeom, fig.show='hide'}
+tb_2012 <- tb_fixed %>% #<<
+  filter(year == 2012) %>%
+  group_by(region) %>%
+  summarise(count = sum(count))
+ggplot(tb_2012, aes(map_id = region)) + 
+    geom_map(aes(fill = count), map = world_map,  #<<
+             color = "grey70", size = 0.1, na.rm = TRUE) +  #<<
+    expand_limits(x = world_map$long, y = world_map$lat) +
+    scale_fill_viridis("Count") +
+    theme_map() 
+```
+]
+---
+
+```{r ref.label='tb_mapgeom', echo=FALSE, out.width="100%", fig.width=12, fig.height=5.5}
+```
+
+---
+# Counts are typically skewed
+
+.pull-left[
+
+ may be best to symmetrise
+ 
+.font_small[
+```{r tb_map_counts, echo=TRUE, fig.show='hide'}
+ggplot(tb_2012, aes(x = count)) + 
+  geom_histogram() 
+```
+]
+]
+
+.pull-right[
+```{r ref.label='tb_map_counts', echo=FALSE}
+```
+]
+
+---
+
+.pull-left[
+
+.font_small[
+```{r tb_map_logcounts, echo=TRUE, fig.show='hide'}
+ggplot(tb_2012, aes(x = count)) + 
+  geom_histogram() + 
+  scale_x_log10()
+```
+]
+]
+
+.pull-right[
+```{r ref.label='tb_map_logcounts', echo=FALSE}
+```
+]
+
+---
+# `geom_polygon` can also be used
+
+.font_small[
+```{r tb_map, fig.show='hide'}
+tb_2012_map <- world_map %>% left_join(tb_2012) #<<
+ggplot(tb_2012_map, aes(x = long, y = lat, group=group)) + 
+    geom_polygon(aes(fill = count), #<<
+             color="grey70", size = 0.1, na.rm = TRUE) +  #<<
+    expand_limits(x = world_map$long*1.1, y = world_map$lat*1.1) +
+    scale_fill_viridis("Count", trans = "log10") +
+    theme_map() 
+```
+]
+
+---
+
+```{r ref.label='tb_map', echo=FALSE, out.width="100%", fig.width=12, fig.height=5.5}
+```
+
+```{r eval=FALSE, echo=FALSE}
+# Exercise 2, use a square root scale
+# Exercise 3, use a manual scale
+```
+
+---
+class: transition middle animated slideInLeft
+
+# Let's try another one, COVID incidence in Victoria
+
+- Choropleth
+- Cartogram
+
+---
+## Get the data 
+
+This is extracted from https://www.covid19data.com.au/victoria
+
+.panelset[
+.panel[.panel-name[data]
+```{r covid-data, echo=FALSE, eval=TRUE}
+# Read the data
+# Replace null with 0, for three LGAs
+# Convert to long form to join with polygons
+# Make the date variables a proper date
+# Set NAs to 0, this is a reasonable assumption
+covid <- read_csv(here::here("data/melb_lga_covid.csv")) %>%
+  mutate(Buloke = as.numeric(ifelse(Buloke == "null", "0", Buloke))) %>%
+   mutate(Hindmarsh = as.numeric(ifelse(Hindmarsh == "null", "0", Hindmarsh))) %>%
+   mutate(Towong = as.numeric(ifelse(Towong == "null", "0", Towong))) %>%
+  pivot_longer(cols = Alpine:Yarriambiack, names_to="NAME", values_to="cases") %>%
+  mutate(Date = ydm(paste0("2020/",Date))) %>%
+  mutate(cases=replace_na(cases, 0))
+DT::datatable(covid, width=1150, height=100)
+```
+]
+.panel[.panel-name[R]
+
+.font_small[
+```{r ref.label="covid-data", echo=TRUE, eval=FALSE}
+```
+]
+
+]
+]
+---
+## Get a map from ozmaps
+
+.panelset[
+.panel[.panel-name[data]
+
+- Read the LGA data from `ozmaps` package. 
+- This has LGAs for all of Australia. 
+- Need to filter out Victoria LGAs, avoiding LGAs  from other states with same name, and make the names match covid data names. This is done using a regex expression removing () state and LGA type text strings
+
+```{r vic-map, echo=FALSE, eval=TRUE}
+data("abs_lga")
+vic_lga <- abs_lga %>%
+  mutate(NAME = ifelse(NAME == "Latrobe (M) (Tas.)", "LatrobeM", NAME)) %>%
+  mutate(NAME = ifelse(NAME == "Kingston (DC) (SA)", "KingstonSA", NAME)) %>%
+  mutate(NAME = ifelse(NAME == "Bayside (A)", "BaysideA", NAME)) %>% 
+  mutate(NAME = str_replace(NAME, " \\(.+\\)", "")) %>%
+  mutate(NAME = ifelse(NAME == "Colac-Otway", "Colac Otway", NAME)) 
+vic_lga <- st_transform(vic_lga, 3395) 
+# 3395 is EPSG CRS, equiv to WGS84 mercator, 
+# see https://spatialreference.org/ref/epsg/?page=28
+# cartogram() needs this to be set
+```
+]
+.panel[.panel-name[R]
+
+.font_small[
+```{r ref.label="vic-map", echo=TRUE, eval=FALSE}
+```
+]
+
+]
+]
+---
+## Join and  colour the map
+
+.panelset[
+.panel[.panel-name[plot]
+```{r covid-choropleth, fig.width=10, fig.height=10, out.width="50%", echo=FALSE, eval=TRUE}
+# Filter to final day, which is cumulative count
+covid_cum <- covid %>% 
+  filter(Date == max(Date)) 
+
+# Join covid data to polygon data, remove LGAs with 
+# missing values which should leave just Vic LGAs
+vic_lga_covid <- vic_lga %>%
+  left_join(covid_cum, by="NAME") %>%
+  filter(!is.na(cases))
+
+# Make choropleth map, with appropriate colour palette
+p <- ggplot(vic_lga_covid) + 
+  geom_sf(aes(fill = cases, label=NAME), colour="white") + 
+  scale_fill_distiller("Cases", palette = "YlOrRd",
+                       direction=1) + 
+  theme_map() +
+  theme(legend.position="bottom")
+p
+#ggplotly(p)
+```
+]
+.panel[.panel-name[R]
+.font_small[
+```{r ref.label="covid-choropleth", echo=TRUE, eval=FALSE}
+```
+]
+]
+]
+---
+## Get population data
+
+
+.panelset[
+.panel[.panel-name[data]
+
+- Incorporate population data to make cartogram
+- Population from https://www.planning.vic.gov.au/land-use-and-population-research/victoria-in-future/tab-pages/victoria-in-future-data-tables
+- Polygons are transformed so that area matches, as best possible, to the population
+
+
+```{r vic-pop, echo=FALSE, eval=TRUE}
+
+pop <- read_xlsx("../data/VIF2019_Population_Service_Ages_LGA_2036.xlsx", sheet=3, skip=13, col_names = FALSE) %>%
+  select(`...4`, `...22`) %>%
+  rename(NAME = `...4`, pop=`...22`) %>%
+  filter(NAME != "Unincorporated Vic") %>% 
+  mutate(NAME = str_replace(NAME, " \\(.+\\)", "")) %>%
+  mutate(NAME = ifelse(NAME == "Colac-Otway", "Colac Otway", NAME)) %>%
+  mutate(pop = round(pop, 0))
+DT::datatable(pop, width=1150, height=100)
+
+vic_lga_covid <- vic_lga_covid %>%
+  left_join(pop, by="NAME") 
+
+# Compute additional statistics
+vic_lga_covid <- vic_lga_covid %>%
+  group_by(NAME) %>%
+  mutate(cases_per10k = max(cases/pop*10000, 0),
+         lnew_cases = log10(cases - min(cases) + 1)) %>%
+  ungroup()
+```
+]
+.panel[.panel-name[R]
+.font_small[
+```{r ref.label="vic-pop", echo=TRUE, eval=FALSE}
+```
+]
+
+]
+]
+---
+## Make a cartogram
+
+```{r vic-cartogram, fig.width=10, fig.height=10, out.width="50%", echo=FALSE, eval=TRUE}
+# Make a contiguous cartogram
+vic_lga_covid_carto <- cartogram_cont(vic_lga_covid, "pop")
+# This st_cast() is necessary to get plotly to work
+vic_lga_covid_carto <- st_cast(vic_lga_covid_carto, "MULTIPOLYGON") 
+
+p <- ggplot(vic_lga_covid_carto) + 
+  geom_sf(aes(fill = cases, label=NAME), colour="white") + 
+  scale_fill_distiller("Cases", palette = "YlOrRd",
+                       direction=1) + 
+  theme_map() +
+  theme(legend.position="bottom") 
+p
+
+```
+]
+.panel[.panel-name[R]
+.font_small[
+```{r ref.label="covid-cartogram", echo=TRUE, eval=FALSE}
+```
+]
+
+]
+]
+---
+# Resources
+
+Where to go to get more help on maps
+
+- `ozmaps` package: https://github.com/mdsumner/ozmaps, https://mdsumner.github.io/ozmaps/
+- `eechidna` package https://docs.ropensci.org/eechidna/
+- https://www.littlemissdata.com/blog/maps
+- https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html
+- https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html
+
+Note: It is important when converting spatial objects from a mapping software to a data analysis project is "thinning" the map to make it smaller and efficient to work with. 
+
+---
+class: transition middle animated slideInLeft
+
+# Reading google maps and overlaying data
+
+---
+
+```{r eval=FALSE, echo=FALSE}
+# Data extracted from ALA with this code
+# install.packages("ALA4R")
+library(ALA4R)
+l <- specieslist("platypus")
+platypus <- occurrences("Ornithorhynchus anatinus", 
+                        email = "dicook@monash.edu", 
+                        download_reason_id = 10)
+# This now sends you an email to download from the website! And it is tsv not csv
+platypus <- read_tsv(here::here("data_raw/platypus/data.csv"))
+# There are some odd values!
+oz_bbox <- c(112.9, # min long
+              -45, # min lat
+              159, # max long
+              -10)
+platypus <- platypus %>%
+  filter(Longitude > oz_bbox[1], Longitude < oz_bbox[3], Latitude > oz_bbox[2], Latitude < oz_bbox[4])
+save(platypus, file=here::here("data/platypus.rda"))
+```
+
+.pull-left[
+.font_small[
+```{r}
+load(here::here("data/platypus.rda"))
+p <- ggplot(platypus) + 
+  geom_point(aes(x = Longitude, 
+                 y = Latitude), 
+             alpha = 0.1)
+p
+```
+]
+
+]
+.pull-right[
+<br>
+<br>
+
+.font_small[
+```{r}
+p + coord_map()
+```
+]
+]
+
+---
+# Extract Open Street Map using `ggmap`
+
+.font_small[
+```{r eval=FALSE}
+oz_bbox <- c(112.9, # min long
+              -45, # min lat
+              159, # max long
+              -10) # max lat
+oz_map <- get_map(location = oz_bbox, source = "osm")
+save(oz_map, file=here::here("data/oz_map.rda"))
+```
+]
+
+```{r eval=FALSE, echo=FALSE}
+# Exercise 4, density plot
+```
+
+---
+
+.pull-left[
+.font_small[
+```{r platypus, fig.show='hide'}
+load(here::here("data/oz_map.rda"))
+ggmap(oz_map) + 
+  geom_point(data = platypus, 
+             aes(x = Longitude, 
+                 y = Latitude), 
+             alpha = 0.1, 
+             colour = "orange") + 
+  theme_map()
+```
+]
+]
+.pull-right[
+```{r ref.label="platypus", echo=FALSE}
+```
+
+]
+---
+
+class: exercise middle hide-slide-number
+
+
+<i class="fas fa-users"></i>
+
+# <i class="fas fa-code"></i> Open `day2-exercise-02.Rmd`
+
+<center>
+`r countdown::countdown(15, class = "clock")`
+</center>
+
+
+---
+
+```{r endslide, child="assets/endslide.Rmd"}
+```
+
