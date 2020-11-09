@@ -3,7 +3,7 @@ title: "Data Visualization with R <br> Workshop Day 2"
 subtitle: "Getting your plots <br> to talk back"
 author: "Di Cook"
 email: "dicook@monash.edu"
-date: "29th July 2020 @ Statistical Society of Australia | Zoom"
+date: "12th Nov 2020 @ Statistical Society of Australia | Zoom"
 length: "360 minutes"
 color_theme: "yellow"
 pdflink: "day2-session3.pdf"
@@ -40,7 +40,7 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = T}
+```{r, include = FALSE, eval = F}
 input <- fs::path_ext_set(current_file, "html")
 pagedown::chrome_print(input = input, format = "pdf", wait = 25)
 ```
@@ -71,9 +71,30 @@ library(plotly)
 library(gganimate)
 library(ggmap)
 library(lubridate)
+library(gapminder)
 ```
 
+---
+# Philosophy
 
+.monash-orange2[The purpose of interactivity is to display more than can be achieved with persistent plot elements, and to invite the reader to engage with the plot.]
+--
+
+.pull-left[
+- Mouse-over labels .monash-orange2[de-clutters] a plot
+
+- Pan/zoom allows .monash-orange2[re-focusing] attention
+
+- Selection allows focusing attention
+ 
+- .monash-orange2[Linking connects] elements from multiple plots
+
+]
+--
+
+.pull-right[
+.monash-blue2[Animation] allows more information to be displayed, but developer keeps control. Beware that it is easy to .monash-blue2[forget] what was just displayed, so keeping some elements persistent, maybe faint, can be useful for the reader.
+]
 
 ---
 class: transition middle animated slideInLeft
@@ -92,10 +113,10 @@ platypus <- platypus %>%
   filter(year(eventDate) > 2018) 
 platypus %>%
   leaflet() %>%
-  addTiles() %>%
-  addCircleMarkers(
-    radius = 1, opacity = 0.5, color = "orange", label = ~eventDate,
-    lat = ~Latitude, lng = ~Longitude)
+  addTiles() %>% #<<
+  addCircleMarkers( #<<
+    radius = 1, opacity = 0.5, color = "orange", label = ~eventDate, #<<
+    lat = ~Latitude, lng = ~Longitude) #<<
 ```
 ]
 
@@ -109,7 +130,7 @@ platypus %>%
 ```
 
 ---
-class: transition middle animated slideInLeft
+class: transition middle animated 
 
 # Reflection on leaflet
 
@@ -141,18 +162,19 @@ limited capabilities
 .font_small[
 ```{r platy_plotly, fig.show='hide', results='hide'}
 load(here::here("data/oz_map.rda"))
-ggmap(oz_map) + 
+p <- ggmap(oz_map) + 
   geom_point(data = platypus, 
-             aes(x = Longitude, y = Latitude), 
+             aes(x = Longitude, y = Latitude, label=eventDate), 
              alpha = 0.5, colour = "orange") + 
   theme_map()
-ggplotly()
+# ggplotly(p) #<<
 ```
 ]
 
 ---
 
-```{r ref.label="platy_plotly", echo=FALSE, out.width="80%"}
+```{r echo=FALSE, fig.width=10, fig.height=8, out.width="80%"}
+ggplotly(p, tooltip="label")
 ```
 
 ---
@@ -201,9 +223,9 @@ ggplotly(p1)
 
 .font_small[
 ```{r eval=FALSE}
-tb_action <- highlight_key(tb_oz, ~age_group)
+tb_action <- highlight_key(tb_oz, ~age_group) #<<
 
-p2 <- ggplot(tb_action, aes(x = year, y = count)) +
+p2 <- ggplot(tb_action, aes(x = year, y = count)) + #<<
   geom_line(aes(group = age_group)) +
   geom_smooth() + 
   facet_wrap(~sex)  
@@ -211,7 +233,7 @@ p2 <- ggplot(tb_action, aes(x = year, y = count)) +
 gg <- ggplotly(p2, height = 300, width = 600) %>%
    layout(title = "Click on a line to highlight an age group")
 
-highlight(gg)
+highlight(gg) #<<
 ```
 ]
 
@@ -220,7 +242,7 @@ highlight(gg)
 <img src="images/tb_crosstalk.png" width="95%">
 
 ```{r eval=FALSE, echo=FALSE}
-# Exercise 2 map age to colour and see if it works
+# Exercise 2 for students map age to colour and see if it works
 ```
 
 ---
@@ -231,25 +253,25 @@ highlight(gg)
 - useful for different important stages of a visualization (e.g. time) and to keep track of how different visualizations are related 
 --
 
-- .orange[can also be used in talks]
+- .monash-orange2[makes slides come alive in talks.]
 
 ---
 # An example animation
 
-```{r gapminder, echo=FALSE, fig.width = 7, fig.height = 4.5, cache=TRUE}
-library(gapminder)
-
+```{r gapminder, echo=FALSE, fig.width = 7, fig.height = 4.5, out.width="60%", cache=TRUE}
 ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   geom_point(alpha = 0.7) +
   scale_colour_manual(values = country_colors, guide=FALSE) +
   scale_size("Population size", range = c(2, 12), breaks=c(1*10^8, 2*10^8, 5*10^8, 10^9, 2*20^9)) +
   scale_x_log10() +
   facet_wrap(~continent) +
-  theme(legend.position = "bottom") +
+  theme(legend.position = "none") +
   # Here comes the gganimate specific bits
-  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
-  gganimate::transition_time(year) +
-  gganimate::ease_aes('linear')
+  labs(title = 'Year: {frame_time}', #<<
+       x = 'GDP per capita', #<<
+       y = 'life expectancy') + #<<
+  gganimate::transition_time(year) + #<<
+  gganimate::ease_aes('linear') #<<
 ```
 
 Countries are colored manually by `country_colors` (hue shows continent, saturation is individual country)
@@ -366,6 +388,13 @@ We control plot movement with (a grammar of animation):
 --
 
 - Easing: `ease_aes()` defines how different aesthetics should be eased during transitions.
+
+---
+
+.font-smaller[
+```{r ref.label="gapminder", echo=TRUE, eval=FALSE}
+```
+]
 
 ---
 ## A not-so-simple example, the datasaurus dozen

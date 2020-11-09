@@ -3,7 +3,7 @@ title: "Data Visualization with R <br> Workshop Day 2"
 subtitle: Making maps
 author: "Di Cook"
 email: "dicook@monash.edu"
-date: "29th July 2020 @ Statistical Society of Australia | Zoom"
+date: "12th Nov 2020 @ Statistical Society of Australia | Zoom"
 length: "360 minutes"
 color_theme: "yellow"
 pdflink: "day2-session2.pdf"
@@ -18,6 +18,7 @@ output:
       - "assets/monash-brand.css"
       - "assets/boxes.css"
       - "assets/custom.css"
+      - "assets/panelset.css"
     self_contained: false 
     seal: false 
     chakra: 'libs/remark-latest.min.js'
@@ -40,7 +41,7 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = T}
+```{r, include = FALSE, eval = F}
 input <- fs::path_ext_set(current_file, "html")
 pagedown::chrome_print(input = input, format = "pdf", wait = 25)
 ```
@@ -69,6 +70,12 @@ library(ggthemes)
 library(viridis)
 library(ggmap)
 library(sf)
+library(cartogram)
+library(readxl)
+library(plotly)
+library(ozmaps)
+library(lubridate)
+xaringanExtra::use_panelset()
 ```
 
 ---
@@ -433,7 +440,182 @@ ggplot(tb_2012_map, aes(x = long, y = lat, group=group)) +
 # Exercise 3, use a manual scale
 ```
 
+---
+class: transition middle animated slideInLeft
 
+# Let's try another one, COVID incidence in Victoria
+
+- Choropleth
+- Cartogram
+
+---
+## Get the data 
+
+This is extracted from https://www.covid19data.com.au/victoria
+
+.panelset[
+.panel[.panel-name[data]
+```{r covid-data, echo=FALSE, eval=TRUE}
+# Read the data
+# Replace null with 0, for three LGAs
+# Convert to long form to join with polygons
+# Make the date variables a proper date
+# Set NAs to 0, this is a reasonable assumption
+covid <- read_csv(here::here("data/melb_lga_covid.csv")) %>%
+  mutate(Buloke = as.numeric(ifelse(Buloke == "null", "0", Buloke))) %>%
+   mutate(Hindmarsh = as.numeric(ifelse(Hindmarsh == "null", "0", Hindmarsh))) %>%
+   mutate(Towong = as.numeric(ifelse(Towong == "null", "0", Towong))) %>%
+  pivot_longer(cols = Alpine:Yarriambiack, names_to="NAME", values_to="cases") %>%
+  mutate(Date = ydm(paste0("2020/",Date))) %>%
+  mutate(cases=replace_na(cases, 0))
+DT::datatable(covid, width=1150, height=100)
+```
+]
+.panel[.panel-name[R]
+
+.font_small[
+```{r ref.label="covid-data", echo=TRUE, eval=FALSE}
+```
+]
+
+]
+]
+---
+## Get a map from ozmaps
+
+.panelset[
+.panel[.panel-name[data]
+
+- Read the LGA data from `ozmaps` package. 
+- This has LGAs for all of Australia. 
+- Need to filter out Victoria LGAs, avoiding LGAs  from other states with same name, and make the names match covid data names. This is done using a regex expression removing () state and LGA type text strings
+
+```{r vic-map, echo=FALSE, eval=TRUE}
+data("abs_lga")
+vic_lga <- abs_lga %>%
+  mutate(NAME = ifelse(NAME == "Latrobe (M) (Tas.)", "LatrobeM", NAME)) %>%
+  mutate(NAME = ifelse(NAME == "Kingston (DC) (SA)", "KingstonSA", NAME)) %>%
+  mutate(NAME = ifelse(NAME == "Bayside (A)", "BaysideA", NAME)) %>% 
+  mutate(NAME = str_replace(NAME, " \\(.+\\)", "")) %>%
+  mutate(NAME = ifelse(NAME == "Colac-Otway", "Colac Otway", NAME)) 
+vic_lga <- st_transform(vic_lga, 3395) 
+# 3395 is EPSG CRS, equiv to WGS84 mercator, 
+# see https://spatialreference.org/ref/epsg/?page=28
+# cartogram() needs this to be set
+```
+]
+.panel[.panel-name[R]
+
+.font_small[
+```{r ref.label="vic-map", echo=TRUE, eval=FALSE}
+```
+]
+
+]
+]
+---
+## Join and  colour the map
+
+.panelset[
+.panel[.panel-name[plot]
+```{r covid-choropleth, fig.width=10, fig.height=10, out.width="50%", echo=FALSE, eval=TRUE}
+# Filter to final day, which is cumulative count
+covid_cum <- covid %>% 
+  filter(Date == max(Date)) 
+
+# Join covid data to polygon data, remove LGAs with 
+# missing values which should leave just Vic LGAs
+vic_lga_covid <- vic_lga %>%
+  left_join(covid_cum, by="NAME") %>%
+  filter(!is.na(cases))
+
+# Make choropleth map, with appropriate colour palette
+p <- ggplot(vic_lga_covid) + 
+  geom_sf(aes(fill = cases, label=NAME), colour="white") + 
+  scale_fill_distiller("Cases", palette = "YlOrRd",
+                       direction=1) + 
+  theme_map() +
+  theme(legend.position="bottom")
+p
+#ggplotly(p)
+```
+]
+.panel[.panel-name[R]
+.font_small[
+```{r ref.label="covid-choropleth", echo=TRUE, eval=FALSE}
+```
+]
+]
+]
+---
+## Get population data
+
+
+.panelset[
+.panel[.panel-name[data]
+
+- Incorporate population data to make cartogram
+- Population from https://www.planning.vic.gov.au/land-use-and-population-research/victoria-in-future/tab-pages/victoria-in-future-data-tables
+- Polygons are transformed so that area matches, as best possible, to the population
+
+
+```{r vic-pop, echo=FALSE, eval=TRUE}
+
+pop <- read_xlsx("../data/VIF2019_Population_Service_Ages_LGA_2036.xlsx", sheet=3, skip=13, col_names = FALSE) %>%
+  select(`...4`, `...22`) %>%
+  rename(NAME = `...4`, pop=`...22`) %>%
+  filter(NAME != "Unincorporated Vic") %>% 
+  mutate(NAME = str_replace(NAME, " \\(.+\\)", "")) %>%
+  mutate(NAME = ifelse(NAME == "Colac-Otway", "Colac Otway", NAME)) %>%
+  mutate(pop = round(pop, 0))
+DT::datatable(pop, width=1150, height=100)
+
+vic_lga_covid <- vic_lga_covid %>%
+  left_join(pop, by="NAME") 
+
+# Compute additional statistics
+vic_lga_covid <- vic_lga_covid %>%
+  group_by(NAME) %>%
+  mutate(cases_per10k = max(cases/pop*10000, 0),
+         lnew_cases = log10(cases - min(cases) + 1)) %>%
+  ungroup()
+```
+]
+.panel[.panel-name[R]
+.font_small[
+```{r ref.label="vic-pop", echo=TRUE, eval=FALSE}
+```
+]
+
+]
+]
+---
+## Make a cartogram
+
+```{r vic-cartogram, fig.width=10, fig.height=10, out.width="50%", echo=FALSE, eval=TRUE}
+# Make a contiguous cartogram
+vic_lga_covid_carto <- cartogram_cont(vic_lga_covid, "pop")
+# This st_cast() is necessary to get plotly to work
+vic_lga_covid_carto <- st_cast(vic_lga_covid_carto, "MULTIPOLYGON") 
+
+p <- ggplot(vic_lga_covid_carto) + 
+  geom_sf(aes(fill = cases, label=NAME), colour="white") + 
+  scale_fill_distiller("Cases", palette = "YlOrRd",
+                       direction=1) + 
+  theme_map() +
+  theme(legend.position="bottom") 
+p
+
+```
+]
+.panel[.panel-name[R]
+.font_small[
+```{r ref.label="covid-cartogram", echo=TRUE, eval=FALSE}
+```
+]
+
+]
+]
 ---
 # Resources
 
@@ -445,7 +627,7 @@ Where to go to get more help on maps
 - https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html
 - https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html
 
-Note: The biggest change when converting spatial objects from a mapping software to a data analysis project is "thinning" the map to make it smaller and efficient to work with. 
+Note: It is important when converting spatial objects from a mapping software to a data analysis project is "thinning" the map to make it smaller and efficient to work with. 
 
 ---
 class: transition middle animated slideInLeft
@@ -479,7 +661,8 @@ save(platypus, file=here::here("data/platypus.rda"))
 ```{r}
 load(here::here("data/platypus.rda"))
 p <- ggplot(platypus) + 
-  geom_point(aes(x = Longitude, y = Latitude), 
+  geom_point(aes(x = Longitude, 
+                 y = Latitude), 
              alpha = 0.1)
 p
 ```
@@ -523,8 +706,10 @@ save(oz_map, file=here::here("data/oz_map.rda"))
 load(here::here("data/oz_map.rda"))
 ggmap(oz_map) + 
   geom_point(data = platypus, 
-             aes(x = Longitude, y = Latitude), 
-             alpha = 0.1, colour = "orange") + 
+             aes(x = Longitude, 
+                 y = Latitude), 
+             alpha = 0.1, 
+             colour = "orange") + 
   theme_map()
 ```
 ]

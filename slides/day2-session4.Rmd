@@ -3,7 +3,7 @@ title: "Data Visualization with R <br> Workshop Day 2"
 subtitle: Determining the best plot design
 author: "Di Cook"
 email: "dicook@monash.edu"
-date: "29th July 2020 @ Statistical Society of Australia | Zoom"
+date: "12th Nov 2020 @ Statistical Society of Australia | Zoom"
 length: "360 minutes"
 color_theme: "yellow"
 pdflink: "day2session4.pdf"
@@ -40,7 +40,7 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = T}
+```{r, include = FALSE, eval = F}
 input <- fs::path_ext_set(current_file, "html")
 pagedown::chrome_print(input = input, format = "pdf", wait = 25)
 ```
@@ -69,6 +69,23 @@ library(ggthemes)
 library(viridis)
 library(nullabor)
 library(RColorBrewer)
+library(grid)
+library(gridSVG)
+library(colorspace)
+library(vcd)
+
+vis_spacing <- 'style="padding-left:20px;"'
+vis_spacing1 <- 'style="padding-left:10px;"'
+
+grid_setup <- function(label) {
+  grid.newpage()
+  grid.rect(gp = gpar(lty = "solid", lwd = 3, fill = "white"), 
+              width = unit(0.9, "npc"), 
+              height = unit(0.9, "npc"))
+  grid.text(label, x = 0.1, y = 0.9, 
+            gp = gpar(fontsize = 13), just = c("left", "top"))
+  pushViewport(plotViewport(c(2, 3, 4, 3)))
+}
 ```
 
 ```{r tbtidy, echo=FALSE}
@@ -177,7 +194,7 @@ countdown::countdown(0, 30, bottom=0, left=0,
 ---
 class: font_smaller2
 
-On the next slide we have made **two different plots** of TB incidence in the USA, based on three variables:
+On the next slide we have made **two different plots** of TB incidence in the Australia, based on three variables:
 
 ```{r}
 tb_oz %>% select(year, sex, age_group, count) %>% head(5)
@@ -268,7 +285,6 @@ class: transition middle animated slideInLeft
 Plot A makes it easier to examine the trend in proportion. It is easy to miss that all the proportions are greater than 0.5, despite having a guideline (white) at 0.5. It could be argued that setting the vertical axis limits could alleviate this.  The fluctuations from year to year are more visible. Maybe adding a trend model could be helpful, to reduce this noise. Without colour its less visually appealing.
 
 Plot B makes it easier to see that the proportion for males is almost always higher than for females. It also suggests that there is little temporal trend, because the small fluctuations between years is less visible. Having colour makes it more visually appealing. There s less data processing.
-
 ---
 # Perceptual principles
 
@@ -277,6 +293,158 @@ Plot B makes it easier to see that the proportion for males is almost always hig
 - Color palettes: qualitative, sequential, diverging, *palindrome*.
 - Proximity: Place elements for primary comparison close together. 
 - Change blindness: When focus is interrupted differences may not be noticed.
+
+---
+
+```{r task-position-common-scale, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("POSITION\nCOMMON SCALE")
+pushViewport(dataViewport(c(0, 1), c(0, 2)))
+grid.yaxis(at = 0:2)
+grid.points(c(0.2, 0.2), c(1.2, 0.3), pch = 19)
+```
+```{r task-position-non-aligned-scale, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("POSITION\nNON-ALIGNED SCALE")
+pushViewport(viewport(layout = grid.layout(1, 2, widths = unit(0.5, "npc"),
+                         heights = unit(1, "npc")), name = "row1-col2"),
+             viewport(layout.pos.col = 1, layout.pos.row = 1),
+             dataViewport(c(0, 1), c(0, 2), extension = 0))
+grid.yaxis(at = 0:2)
+grid.rect(y = 0, x = 0.2, just = "bottom", gp = gpar(fill = "black"), 
+              width = unit(2, "mm"), 
+              height = 0.5)
+seekViewport("row1-col2")
+pushViewport(viewport(layout.pos.col = 2, layout.pos.row = 1),
+             plotViewport(c(0, 1, 0, 0)),
+             dataViewport(c(0, 1), c(0, 5), extension = 0))
+grid.yaxis(at = 0:5)
+grid.rect(y = 0, x = 0.25, just = "bottom", gp = gpar(fill = "black"), 
+              width = unit(2, "mm"), 
+              height = 0.5)
+```
+```{r task-length, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("LENGTH")
+grid.lines(x = c(0.5, 0.5), y = c(0, 0.8), gp = gpar(lwd = 3))
+grid.lines(x = c(0.3, 0.3), y = c(0, 0.4), gp = gpar(lwd = 3))
+```
+
+
+```{r task-direction, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("DIRECTION")
+grid.lines(x = c(0.5, 0.6), y = c(0.2, 0.8), gp = gpar(lwd = 3), 
+           arrow = arrow())
+grid.lines(x = c(0.3, 0), y = c(0.2, 0.7), gp = gpar(lwd = 3),
+           arrow = arrow())
+```
+
+```{r task-angle, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("ANGLE")
+grid.lines(x = c(0.8, 1), y = c(0.2, 0.8), gp = gpar(lwd = 3))
+grid.lines(x = c(0.8, 0.6), y = c(0.2, 0.8), gp = gpar(lwd = 3))
+grid.lines(x = c(0.3, 0.4), y = c(0.2, 0.8), gp = gpar(lwd = 3))
+grid.lines(x = c(0.3, 0.3), y = c(0.2, 0.8), gp = gpar(lwd = 3))
+```
+```{r task-area, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("AREA")
+grid.circle(gp = gpar(fill = "black"))
+grid.circle(gp = gpar(fill = "black"), x = 0, y = 0.9, r = 0.1)
+```
+```{r task-volume, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("VOLUME")
+# stick 1
+grid.polyline(x = c(0, 0, 0.3, 0.3, 0),
+             y = c(0, 0.3, 0.3, 0, 0),
+             gp=gpar(lwd = 3))
+grid.polyline(x = c(0.3, 0.4, 0.4, 0.1, 0),
+             y = c(0, 0.1, 0.4, 0.4, 0.3),
+             gp=gpar(lwd = 3))
+grid.polyline(x = c(0.3, 0.4), y = c(0.3, 0.4),
+             gp=gpar(lwd = 3))
+# stick 2
+grid.polyline(x = c(0.5, 0.5, 0.8, 0.8, 0.5),
+             y = c(0.1, 0.8, 0.8, 0.1, 0.1),
+             gp=gpar(lwd = 3))
+grid.polyline(x = c(0.8, 0.9, 0.9, 0.6, 0.5),
+             y = c(0.1, 0.2, 0.9, 0.9, 0.8),
+             gp=gpar(lwd = 3))
+grid.polyline(x = c(0.8, 0.9), y = c(0.8, 0.9),
+             gp=gpar(lwd = 3))
+```
+```{r task-curvature, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("CURVATURE")
+grid.bezier(c(0.5, 0.5, 0.8, 0.8), c(0.4, 0.8, 0.8, 0.4),
+            gp = gpar(lwd = 3))
+grid.bezier(c(0.2, 0.2, 0.4, 0.4), c(0.2, 0.4, 0.4, 0.2),
+            gp = gpar(lwd = 3))
+```
+```{r task-texture, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("TEXTURE")
+grid.rect(0.1, 0.3, name = "rect1", width = 0.5, height = 0.4,
+          gp = gpar(lwd = 3))
+grid.rect(0.5, 0.95, name = "rect2", width = 0.3, height = 0.4,
+          gp = gpar(lwd = 3))
+grid.rect(0.95, 0.3, name = "rect3", width = 0.3, height = 0.5,
+          gp = gpar(lwd = 3))
+pat1 <- pattern(linesGrob(gp=gpar(lwd=5)),
+  width = unit(0.04, "npc"), height = unit(0.04, "npc"),
+  dev.width = 0.5, dev.height = 0.4)
+pat2 <- pattern(linesGrob(c(0, 3), c(0, 3), gp=gpar(lwd=5)),
+  width = unit(0.1, "npc"), height = unit(0.1, "npc"),
+  dev.width = 0.3, dev.height = 0.4)
+pat3 <- pattern(circleGrob(r = 0.3, gp=gpar(fill="black")),
+  dev.width = 0.05, dev.height = 0.08)
+grid.patternFill("rect1", pattern = pat1)
+grid.patternFill("rect2", pattern = pat2)
+grid.patternFill("rect3", pattern = pat3)
+# pattern only shows up if below is done
+grid.export(here::here("task-texture.svg"))
+```
+```{r task-shape, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("SHAPE")
+grid.points(x = rep((1:4)/4.5, each = 4), y = rep((1:4)/4.5, times = 4), pch = c(1:16),
+            size = unit(0.75, "char"))
+```
+```{r task-color-hue, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("COLOR HUE")
+grid.points(x = rep((1:4)/4.5, each = 4), y = rep((1:4)/4.5, times = 4), 
+            size = unit(1, "char"), pch = 16,
+            gp = gpar(col = hcl2hex(seq(0, 360, length.out = 16), 100, 60)))
+```
+```{r task-color-chroma, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("COLOR CHROMA")
+grid.points(x = rep((1:4)/4.5, each = 4), y = rep((1:4)/4.5, times = 4), 
+            size = unit(1, "char"), pch = 16,
+            gp = gpar(col = hcl2hex(0, seq(0, 360, length.out = 16), 60)))
+```
+```{r task-color-luminance, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("COLOR LUMINANCE")
+grid.points(x = rep((1:4)/4.5, each = 4), y = rep((1:4)/4.5, times = 4), 
+            size = unit(1, "char"), pch = 16,
+            gp = gpar(col = hcl2hex(0, 35, seq(0, 100, length.out = 16))))
+```
+```{r task-color-saturation, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("COLOR SATURATION")
+grid.points(x = rep((1:4)/4.5, each = 4), y = rep((1:4)/4.5, times = 4), 
+            size = unit(1, "char"), pch = 16,
+            gp = gpar(col = hex(HSV(0, seq(0, 1, length.out = 16), 0.6))))
+```
+```{r task-color-shade, include = FALSE, fig.height = 1.8, fig.width = 2.3}
+grid_setup("COLOR SHADE")
+grid.points(x = rep((1:4)/4.5, each = 4), y = rep((1:4)/4.5, times = 4), 
+            size = unit(1, "char"), pch = 16,
+            gp = gpar(col = hex(HSV(0, 0.6, seq(0, 1, length.out = 16)))))
+```
+
+
+.grid[
+.item.center[
+<img src="images/day2-session4/task-position-common-scale-1.svg"><img src="images/day2-session4/task-position-non-aligned-scale-1.svg" `r vis_spacing1`><img src="images/day2-session4/task-length-1.svg" `r vis_spacing1`><img src="images/day2-session4/task-direction-1.svg" `r vis_spacing1`><img src="images/day2-session4/task-angle-1.svg" `r vis_spacing1`>
+
+<img src="images/day2-session4/task-area-1.svg"><img src="images/day2-session4/task-volume-1.svg" `r vis_spacing1`><img src="images/day2-session4/task-curvature-1.svg" `r vis_spacing1`><img src="images/day2-session4/task-texture.svg" `r vis_spacing1` width="220pt" height="172pt"><img src="images/day2-session4/task-shape-1.svg" `r vis_spacing1`>
+
+{{content}}
+
+
+]]
 
 ---
 # Hierarchy of mappings

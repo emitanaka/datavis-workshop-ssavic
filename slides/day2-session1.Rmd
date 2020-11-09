@@ -3,7 +3,7 @@ title: "Data Visualization with R <br> Workshop Day 2"
 subtitle: Review of Grammar of Graphics
 author: "Di Cook"
 email: "dicook@monash.edu"
-date: "29th July 2020 @ Statistical Society of Australia | Zoom"
+date: "12th Nov  2020 @ Statistical Society of Australia | Zoom"
 length: "360 minutes"
 color_theme: "yellow"
 pdflink: "day2session0.pdf"
