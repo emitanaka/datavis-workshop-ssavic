@@ -41,7 +41,7 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = T}
+```{r, include = FALSE, eval = F}
 input <- fs::path_ext_set(current_file, "html")
 pagedown::chrome_print(input = input, format = "pdf", wait = 20)
 ```
@@ -80,9 +80,9 @@ Monash University
 <h1>About your instructor</h1>
 
 <ul>
-<li>I moved to Melbourne in Jul 2015 to start my job at Monash</li>
+<li>In July 2015 I moved home to Australia after many years of education and work in the USA</li>
 <li>I have been using R since it first emerged from Auckland, NZ in 1995, and I am an elected member of the R Foundation `r anicon::faa("quidditch", animate = "spin", anitype = "hover")`</li>
-<li>I am one of the members of the R Journal editorial team that publishes about R packages `r anicon::faa("book", animate = "tada", anitype = "hover")`</li>
+<li>I am one of four editors of the R Journal editorial team that publishes articles about R packages `r anicon::faa("book", animate = "tada", anitype = "hover")`</li>
 
 <li>My main statistical application areas are sports, ecology and bioinformatics; and I like to develop new software</li>
 </ul>
@@ -158,16 +158,16 @@ There are new participants today, so please
 
 Time | Activity 
 :----|:---
-8.30-9.00 | Registration + Installation Help
-9.00-9.30 | **Lesson 1:** Check your `ggplot2` knowledge
-9.30-9.45 |  *Break out session*
-9.45-10.15 | **Lesson 2:** Making maps 
-10.15-10.30 | *Break out session*
-10.30 - 11.00 | *Coffee Break*
-11.00 - 11.30 | **Lesson 3:** Getting your plots to talk back 
-11.30-11.45 | *Break out session*
-11.45 - 12.15 | **Lesson 4:** Determining best plot design
-12.15-12.30 | *Break out session* + Conclusion
+1.00-1.30 | Registration + Installation Help
+1.30-2.00 | **Lesson 1:** Check your `ggplot2` knowledge
+2.00-2.15 |  *Break out session*
+2.15-2.45 | **Lesson 2:** Making maps 
+2.45-3.00 | *Break out session*
+3.00-3.30 | *Coffee Break*
+3.30-4.00 | **Lesson 3:** Getting your plots to talk back 
+4.00-4.15 | *Break out session*
+4.15-4.45 | **Lesson 4:** Determining best plot design
+4.45-5.00 | *Break out session* + Conclusion
 
 
 ---
