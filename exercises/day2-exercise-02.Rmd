@@ -9,7 +9,7 @@ output:
 Push the `knit` button!
 
 
-```{r setup, child="exercise-setup.Rmd"}
+```{r setup, child="exercise-setup.Rmd", eval = file.exists("exercise-setup.Rmd")}
 ```
 
 ```{r, include = FALSE}
