@@ -29,6 +29,18 @@ Time | Activity
 4.15-4.45 | **Lesson 4:** Determining best plot design
 4.45-5.00 | *Break out session* + Conclusion
 
+## Data
+
+Download the folowing data for the exercises:
+
+* <a href="data/melb_lga_covid.csv" download>melb_lga_covid.csv</a>
+* <a href="data/VIF2019_Population_Service_Ages_LGA_2036.xlsx" download>VIF2019_Population_Service_Ages_LGA_2036.xlsx</a>
+* <a href="data/oz_map.rda" download>oz_map.rda</a>
+* <a href="data/platypus.rda" download>platypus.rda</a>
+* <a href="data/TB_notifications_2020-07-01.csv" download>TB_notifications_2020-07-01.csv</a>
+
+
+
 ## Exercises
 
 Before getting started, you will need to install the following R-packages:
@@ -42,6 +54,9 @@ glue::glue("
   ")
 ```
 ```
+
+
+
 
 1. Review of Grammar of Graphics <a class="tag" href="exercises/day2-exercise-01.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/day2-exercise-01.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/day2-exercise-01-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/day2-exercise-01-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
 
