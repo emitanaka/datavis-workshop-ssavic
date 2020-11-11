@@ -1,0 +1,138 @@
+---
+title: "Exercise 3 Solution: Getting your plots to talk back"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+Push the `knit` button!
+
+
+```{r setup, child="exercise-setup.Rmd", eval = file.exists("exercise-setup.Rmd")}
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE
+  )
+```
+
+```{r pkgs, message = FALSE, warning = FALSE}
+library(tidyverse) # contains ggplot2, dplyr, tidyr, etc
+library(leaflet)
+library(lubridate)
+library(plotly)
+library(gganimate)
+library(viridis)
+library(ggthemes)
+```
+
+## `tuberculosis` dataset
+
+```{r tb-data}
+tb <- read_csv(here::here("data/TB_notifications_2020-07-01.csv")) %>% 
+  dplyr::select(country, iso3, year, new_sp_m04:new_sp_fu) %>%
+  pivot_longer(cols=new_sp_m04:new_sp_fu, names_to="sexage", values_to="count") %>%
+  mutate(sexage = str_replace(sexage, "new_sp_", "")) %>%
+  mutate(sex=substr(sexage, 1, 1), 
+         age=substr(sexage, 2, length(sexage))) %>%
+  dplyr::select(-sexage) %>%
+  filter(!(age %in% c("04", "014", "514", "u"))) %>%
+  filter(year > 1996, year < 2013) %>%
+  mutate(age_group = factor(age, 
+                            labels = c("15-24", "25-34", "35-44", 
+                                       "45-54", "55-64", "65-"))) %>%
+  dplyr::select(country, year, age_group, sex, count)
+
+# Filter Australia
+tb_oz <- tb %>% 
+  filter(country == "Australia") 
+
+# Fix names for map joining
+tb_fixed <- tb %>% 
+  mutate(region=recode(country, 
+                       "United States of America"="USA", 
+                       "United Kingdom of Great Britain and Northern Ireland"="UK",
+                       "Russian Federation"="Russia",
+                       "Viet Nam"="Vietnam",
+                       "Venezuela (Bolivarian Republic of)"="Venezuela",
+                       "Bolivia (Plurinational State of)"="Bolivia",
+                       "Czechia"="Czech Republic",
+                       "Iran (Islamic Republic of)"="Iran",
+                       "Iran (Islamic Republic of)"="Laos",
+                       "Democratic People's Republic of Korea"="North Korea",
+                       "Republic of Korea"="South Korea",
+                       "United Republic of Tanzania"="Tanzania",
+                       "Congo"="Republic of Congo"))
+
+# Aggregate by year
+tb_yearly <- tb_fixed %>%
+group_by(year, region) %>%
+summarise(count = sum(count))
+```
+
+## `platypus` dataset
+
+```{r platypus}
+load(here::here("data/platypus.rda"))
+platypus <- platypus %>%
+  rename(eventDate = `Event Date - parsed`) %>%
+  filter(!is.na(Latitude), !is.na(Longitude), !is.na(eventDate)) %>%
+  filter(year(eventDate) > 2018) 
+```
+
+### Exercise 1.1: Leaflet with different colour
+
+```{r day2-exercise-03-01, echo = F, class = "target"}
+knitr::include_graphics("images/day2-exercise-03/day2-exercise-01-1.png")
+```
+
+```{r day2-exercise-03-01s}
+# add your code here!
+```
+
+### Exercise 1.2: Change the color palette
+
+Add colour to plotly highlighting 
+
+Remember this code:
+
+```{r eval=FALSE}
+tb_action <- highlight_key(tb_oz, ~age_group)
+
+p2 <- ggplot(tb_action, aes(x=year, y=count)) +
+  geom_line(aes(group=age_group)) +
+  geom_smooth() + 
+  facet_wrap(~sex)  
+
+gg <- ggplotly(p2, height = 300, width = 600) %>%
+   layout(title = "Click on a line to highlight an age group")
+
+highlight(gg)
+```
+
+Use this  plot as the base, and check highlighting still works
+
+```{r day2-exercise-03-02, echo = F, class = "target"}
+knitr::include_graphics("images/day2-exercise-03/day2-exercise-02-1.png")
+```
+
+```{r day2-exercise-03-02s}
+# add your code here!
+```
+
+### Exercise 1.3:  Animate a map
+
+This is a bit slow to generate, but give it a go!
+
+```{r day2-exercise-03-03, echo = F, class = "target"}
+knitr::include_graphics("images/day2-exercise-03/day2-exercise-03-1.gif")
+```
+
+```{r day2-exercise-03-03s}
+# add your code here!
+```
+
