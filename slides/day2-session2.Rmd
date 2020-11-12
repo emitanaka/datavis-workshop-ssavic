@@ -592,6 +592,8 @@ vic_lga_covid <- vic_lga_covid %>%
 ---
 ## Make a cartogram
 
+.panelset[
+.panel[.panel-name[plot]
 ```{r vic-cartogram, fig.width=10, fig.height=10, out.width="50%", echo=FALSE, eval=TRUE}
 # Make a contiguous cartogram
 vic_lga_covid_carto <- cartogram_cont(vic_lga_covid, "pop")
@@ -610,7 +612,7 @@ p
 ]
 .panel[.panel-name[R]
 .font_small[
-```{r ref.label="covid-cartogram", echo=TRUE, eval=FALSE}
+```{r ref.label="vic-cartogram", echo=TRUE, eval=FALSE}
 ```
 ]
 
