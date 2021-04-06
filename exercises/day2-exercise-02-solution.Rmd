@@ -72,6 +72,7 @@ tb_2012 <- tb_fixed %>% #<<
   group_by(region) %>%
   summarise(count = sum(count))
 ```
+
 ## `platypus` dataset
 
 ```{r platypus}
