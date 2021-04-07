@@ -32,7 +32,7 @@ knitr::include_graphics("images/day1-exercise-01/day1-exercise-01-1.png")
 
 ```{r day1-exercise-01-01s, eval = FALSE}
 # fill all ... and change eval = FALSE to eval = TRUE when done
-ggplot(crampton.pig, aes(..., ..., color = ..., size = ...)) + 
+ggplot(crampton.pig, aes(weight1, weight2, color = ..., size = ...)) + 
   geom_point()
 ```
 

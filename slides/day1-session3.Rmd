@@ -3,7 +3,7 @@ title: "Data Visualisation with R<br>Workshop Day 1"
 subtitle: "Scales and color"
 author: "Emi Tanaka"
 email: "emi.tanaka@monash.edu"
-date: "11th November @ Statistical Society of Australia | Online"
+date: "15th April 2021 @ Statistical Society of Australia | Online"
 length: "30 minutes"
 titleslide_bgimg: "images/ramakant-sharda-0aFg0U2uPJY-unsplash.jpg"
 output:

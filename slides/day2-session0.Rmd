@@ -3,7 +3,7 @@ title: "Day 2: Diving Deeper into <br> Data Visualization with R"
 subtitle: "Introduction"
 author: "Di Cook"
 email: "dicook@monash.edu"
-date: "12 Nov 2020 @ Statistical Society of Australia | Zoom"
+date: "16th April 2021 @ Statistical Society of Australia | Zoom"
 length: "360 minutes"
 color_theme: "yellow"
 pdflink: "day2session0.pdf"
@@ -41,11 +41,6 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = F}
-input <- fs::path_ext_set(current_file, "html")
-pagedown::chrome_print(input = input, format = "pdf", wait = 20)
-```
-
 ```{r titleslide, child="assets/titleslide2.Rmd"}
 ```
 
@@ -90,65 +85,6 @@ Monash University
 
 </div>
 
----
-
-<div class="grid" style="grid: 1fr / 1.2fr 2fr;">
-<div class="item white monash-bg-blue border-right">
-<br>
-
-<div class="circle-image">
-<center>
-<img src="images/FanCheng.png" width = "200px"/>
-</center>
-</div>
-
-**Fan Cheng** <br>
-*PhD Student*<br>
-Monash University
-
-<br>
-
-<i class="fas fa-globe"></i> https://fancheng.me/
-
-<i class="fas fa-envelope"></i> Fan.Cheng@monash.edu
-
-<i class="fab fa-twitter"></i> @fanchengfc
-
-</div>
-
-<div class="item">
-
-<h1>About your helper</h1>
-
-<ul>
-<li>I am a second-year PhD student in Statistics at Monash</li>
-<li>I work for the Monash Data Fluency team to teach workshops on R, Python, Git and Unix</li>
-<li>My research project is about manifold learning based on empirical probability distributions. If you are interested, I am more than happy to talk about it :)</li>
-</ul>
-</div>
-
-</div>
-
-
----
-background-image: url(images/d2bg2.jpg)
-background-size: 30%
-background-position: 100% 0%
-class: middle
-
-
-There are new participants today, so please 
-
-.font_large[Introduce yourself (again) in the chat!]
-
-<br>
-
-* What's your profession?  
-* Where do you live?
-* What's your hobby? 
-* What's one thing you want everyone <br> to know (about you)? 
-
-
 
 ---
 
@@ -158,16 +94,16 @@ There are new participants today, so please
 
 Time | Activity 
 :----|:---
-1.00-1.30 | Registration + Installation Help
-1.30-2.00 | **Lesson 1:** Check your `ggplot2` knowledge
-2.00-2.15 |  *Break out session*
-2.15-2.45 | **Lesson 2:** Making maps 
-2.45-3.00 | *Break out session*
-3.00-3.30 | *Coffee Break*
-3.30-4.00 | **Lesson 3:** Getting your plots to talk back 
-4.00-4.15 | *Break out session*
-4.15-4.45 | **Lesson 4:** Determining best plot design
-4.45-5.00 | *Break out session* + Conclusion
+9.00-9.30 | Registration + Installation Help
+9.30-10.00 | **Lesson 1:** Check your `ggplot2` knowledge
+10.00-10.15 |  *Break out session*
+10.15-10.45 | **Lesson 2:** Making maps 
+10.45-11.00 | *Break out session*
+11.00-11.30 | *Coffee Break*
+11.30-12.00 | **Lesson 3:** Getting your plots to talk back 
+12.00-12.15 | *Break out session*
+12.15-12.45 | **Lesson 4:** Determining best plot design
+12.45-13.00 | *Break out session* + Conclusion
 
 
 ---

@@ -3,7 +3,7 @@ title: "Data Visualisation with R<br>Workshop Day 1"
 subtitle: "Multiple layers, facetting and tidying your data"
 author: "Emi Tanaka"
 email: "emi.tanaka@monash.edu"
-date: "11th November @ Statistical Society of Australia | Online"
+date: "15th April 2021 @ Statistical Society of Australia | Online"
 length: "30 minutes"
 titleslide_bgimg: "images/bg8.jpg"
 output:
@@ -37,10 +37,6 @@ output:
 
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
-```
-```{r, include = FALSE, eval = F}
-input <- fs::path_ext_set(current_file, "html")
-pagedown::chrome_print(input = input, format = "pdf", wait = 20)
 ```
 ```{r titleslide, child="assets/titleslide.Rmd"}
 ```

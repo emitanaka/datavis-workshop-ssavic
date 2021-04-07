@@ -3,7 +3,7 @@ title: "Data Visualization with R <br> Workshop Day 2"
 subtitle: Making maps
 author: "Di Cook"
 email: "dicook@monash.edu"
-date: "12th Nov 2020 @ Statistical Society of Australia | Zoom"
+date: "16th April 2021 @ Statistical Society of Australia | Zoom"
 length: "360 minutes"
 color_theme: "yellow"
 pdflink: "day2-session2.pdf"
@@ -41,10 +41,6 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = F}
-input <- fs::path_ext_set(current_file, "html")
-pagedown::chrome_print(input = input, format = "pdf", wait = 25)
-```
 ```{r titleslide, child="assets/titleslide.Rmd"}
 ```
 ```{r, include = FALSE}
@@ -81,7 +77,7 @@ xaringanExtra::use_panelset()
 ---
 class: font_smaller
 
-# <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Who_logo.svg" width="50px" style="vertical-align: middle;"> Tuberculosis incidence
+# <img src="images/1920px-World_Health_Organization_Logo.svg.png" width="50px" style="vertical-align: middle;"> Tuberculosis incidence
 
 The TB data is from the [WHO]( https://www.who.int/tb/country/data/download/en/). 
 
