@@ -157,16 +157,16 @@ What's would you like for people to know about you?
 
 Time | Activity 
 :----|:---
-9.00-9.30 | Registration + Installation Help
-9.30-10.00 | **Lesson 1:** Getting started with grammar of graphics
-10.00-10.15 |  *Break out session*
-10.15-10.45 | **Lesson 2:**  Multiple layers, facetting and tidying your data
-10.45-11.00 | *Break out session*
-11.00-11.30 | *Coffee Break*
-11.30-12.00 | **Lesson 3:** Scales and color
-12.00-12.15 | *Break out session*
-12.15-12.45 | **Lesson 4:** Publication-ready plots
-12.45-13.00 | *Break out session* 
+8.45-9.00 | Registration + Installation Help
+9.00-9.30 | **Lesson 1:** Getting started with grammar of graphics
+9.30-9.45 |  *Break out session*
+9.45-10.15 | **Lesson 2:**  Multiple layers, facetting and tidying your data
+10.15-10.30 | *Break out session*
+10.30-11.00 | *Coffee Break*
+11.00-11.30 | **Lesson 3:** Scales and color
+11.30-11.45 | *Break out session*
+11.45-12.15 | **Lesson 4:** Publication-ready plots
+12.15-12.30 | *Break out session* 
 
 
 ---
