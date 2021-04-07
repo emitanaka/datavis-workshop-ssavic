@@ -94,16 +94,15 @@ Monash University
 
 Time | Activity 
 :----|:---
-9.00-9.30 | Registration + Installation Help
-9.30-10.00 | **Lesson 1:** Check your `ggplot2` knowledge
-10.00-10.15 |  *Break out session*
-10.15-10.45 | **Lesson 2:** Making maps 
-10.45-11.00 | *Break out session*
-11.00-11.30 | *Coffee Break*
-11.30-12.00 | **Lesson 3:** Getting your plots to talk back 
-12.00-12.15 | *Break out session*
-12.15-12.45 | **Lesson 4:** Determining best plot design
-12.45-13.00 | *Break out session* + Conclusion
+9.00-9.30 | **Lesson 1:** Check your `ggplot2` knowledge
+9.30-9.45 |  *Break out session*
+9.45-10.15 | **Lesson 2:** Making maps 
+10.15-10.30 | *Break out session*
+10.30-11.00 | *Coffee Break*
+11.00-11.30 | **Lesson 3:** Getting your plots to talk back 
+11.30-11.45 | *Break out session*
+11.45-12.15 | **Lesson 4:** Determining best plot design
+12.15-12.30 | *Break out session* + Conclusion
 
 
 ---
