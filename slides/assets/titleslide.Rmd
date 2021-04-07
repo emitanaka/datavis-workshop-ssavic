@@ -6,6 +6,10 @@ class: monash-bg-blue center middle hide-slide-number
 <i class="fas fa-exclamation-circle"></i> These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. See here for <a href=`r fs::path_ext_set(current_file, 'pdf')`>PDF <i class="fas fa-file-pdf"></i></a>. 
 </div>
 
+<br>
+
+.white[Push the **right arrow key** to see the next slide.]
+
 
 ---
 
@@ -27,7 +31,7 @@ class: hide-slide-number title-slide
 
 .center.shade_black.animated.bounceInUp.slower[
 <br><br>
-## <span style="color: #ccf2ff; text-shadow: 10px 10px 100px white;">`r rmarkdown::metadata$subtitle`</span>
+## `r rmarkdown::metadata$subtitle`
 
 <br>
 

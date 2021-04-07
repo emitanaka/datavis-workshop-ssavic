@@ -3,7 +3,7 @@ title: "Data Visualization with R <br> Workshop Day 2"
 subtitle: "Getting your plots <br> to talk back"
 author: "Di Cook"
 email: "dicook@monash.edu"
-date: "12th Nov 2020 @ Statistical Society of Australia | Zoom"
+date: "16th April 2021 @ Statistical Society of Australia | Zoom"
 length: "360 minutes"
 color_theme: "yellow"
 pdflink: "day2-session3.pdf"
@@ -40,10 +40,6 @@ output:
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
 ```
-```{r, include = FALSE, eval = F}
-input <- fs::path_ext_set(current_file, "html")
-pagedown::chrome_print(input = input, format = "pdf", wait = 25)
-```
 ```{r titleslide, child="assets/titleslide.Rmd"}
 ```
 ```{r, include = FALSE}
@@ -56,7 +52,8 @@ knitr::opts_chunk$set(
   fig.retina = 3,
   warning = FALSE,
   message = FALSE,
-  cache = FALSE
+  cache = FALSE,
+  cache.path = "cache/"
 )
 ```
 

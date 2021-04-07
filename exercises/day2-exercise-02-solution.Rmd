@@ -62,7 +62,7 @@ tb_fixed <- tb %>%
                        "Bolivia (Plurinational State of)"="Bolivia",
                        "Czechia"="Czech Republic",
                        "Iran (Islamic Republic of)"="Iran",
-                       "Iran (Islamic Republic of)"="Laos",
+                       "Lao People's Democratic Republic"="Laos",
                        "Democratic People's Republic of Korea"="North Korea",
                        "Republic of Korea"="South Korea",
                        "United Republic of Tanzania"="Tanzania",
@@ -72,7 +72,6 @@ tb_2012 <- tb_fixed %>% #<<
   group_by(region) %>%
   summarise(count = sum(count))
 ```
-
 ## `platypus` dataset
 
 ```{r platypus}

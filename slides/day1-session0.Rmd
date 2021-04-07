@@ -3,7 +3,7 @@ title: "Day 1: Dipping your toes into <br>Data Visualisation with R"
 subtitle: "Getting started"
 author: "Emi Tanaka"
 email: "emi.tanaka@monash.edu"
-date: "11th November 2020 @ Statistical Society of Australia | Zoom"
+date: "15th April 2021 @ Statistical Society of Australia | Zoom"
 length: "360 minutes"
 color_theme: "yellow"
 pdflink: "session0.pdf"
@@ -40,10 +40,6 @@ output:
 
 ```{r, include = FALSE}
 current_file <- knitr::current_input()
-```
-```{r, include = FALSE, eval = T}
-input <- fs::path_ext_set(current_file, "html")
-pagedown::chrome_print(input = input, format = "pdf", wait = 25)
 ```
 ```{r titleslide, child="assets/titleslide.Rmd"}
 ```
@@ -123,7 +119,7 @@ Monash University
 <h1>About your helper</h1>
 
 <ul>
-<li>I am a second-year PhD student in Statistics at Monash</li>
+<li>I am a third-year PhD student in Statistics at Monash</li>
 <li>I work for the Monash Data Fluency team to teach workshops on R, Python, Git and Unix</li>
 <li>My research project is about manifold learning based on empirical probability distributions. If you are interested, I am more than happy to talk about it :)</li>
 </ul>
@@ -161,16 +157,16 @@ What's would you like for people to know about you?
 
 Time | Activity 
 :----|:---
-1.00-1.30 | Registration + Installation Help
-1.30-2.00 | **Lesson 1:** Getting started with grammar of graphics
-2.00-2.15 |  *Break out session*
-2.15-2.45 | **Lesson 2:**  Multiple layers, facetting and tidying your data
-2.45-3.00 | *Break out session*
-3.00-3.30 | *Coffee Break*
-3.30-4.00 | **Lesson 3:** Scales and color
-4.00-4.15 | *Break out session*
-4.15-4.45 | **Lesson 4:** Publication-ready plots
-4.45-5.00 | *Break out session* 
+9.00-9.30 | Registration + Installation Help
+9.30-10.00 | **Lesson 1:** Getting started with grammar of graphics
+10.00-10.15 |  *Break out session*
+10.15-10.45 | **Lesson 2:**  Multiple layers, facetting and tidying your data
+10.45-11.00 | *Break out session*
+11.00-11.30 | *Coffee Break*
+11.30-12.00 | **Lesson 3:** Scales and color
+12.00-12.15 | *Break out session*
+12.15-12.45 | **Lesson 4:** Publication-ready plots
+12.45-13.00 | *Break out session* 
 
 
 ---
@@ -178,16 +174,15 @@ Time | Activity
 
 # Getting Started
 
-```r
-usethis::use_course("emitanaka/datavis-workshop-ssavic", 
-                    destdir="[YOUR DIRECTORY]")
-```
-
 .center[
 
 
 
 .blue.font_large[<i class="fas fa-globe"></i> http://emitanaka.org/datavis-workshop-ssavic/]
+
+
+
+
 ]
 
 
@@ -201,6 +196,11 @@ usethis::use_course("emitanaka/datavis-workshop-ssavic",
 
 and save a permanent copy to your RStudio Cloud account for the R exercises.
 
+]
+
+
+.center[
+.font_large[<i class="fas fa-download"></i> Click [here](https://github.com/emitanaka/datavis-workshop-ssavic/archive/refs/heads/master.zip) to download all materials as a ZIP file.]
 ]
 
 ---

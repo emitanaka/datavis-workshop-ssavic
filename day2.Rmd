@@ -47,7 +47,7 @@ Before getting started, you will need to install the following R-packages:
 
 ```r
 ```{r, echo = FALSE, results='asis'}
-pkgs <- readLines("install-pkgs-day2.txt")
+pkgs <- readLines("install-pkgs-day2-slides.txt")
 pkgsq <- paste0("'", pkgs, "'")
 glue::glue("
   install.packages(c( {paste0(pkgsq, collapse=',\\n\\t\\t\\t\\t\\t')}))

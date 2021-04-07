@@ -120,7 +120,7 @@ highlight(gg)
 Use this  plot as the base, and check highlighting still works
 
 ```{r day2-exercise-02, echo = T, class = "target", fig.width=10, fig.height=4}
-p2 <- ggplot(tb_oz, aes(x=year, y=count)) +
+p2 <- ggplot(tb_action, aes(x=year, y=count)) +
   geom_line(aes(colour=age_group, group=age_group)) +
   facet_wrap(~sex)  
 p2

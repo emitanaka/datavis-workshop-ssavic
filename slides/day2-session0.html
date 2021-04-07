@@ -4,6 +4,7 @@
     <title>Day 2: Diving Deeper into   Data Visualization with R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Di Cook" />
+    <script src="libs/header-attrs-2.7/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
     <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
     <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
@@ -21,8 +22,6 @@
 
 
 
-
-
 class: monash-bg-blue center middle hide-slide-number 
 
 
@@ -30,6 +29,9 @@ class: monash-bg-blue center middle hide-slide-number
 &lt;div class="bg-black white"  style="width:45%;right:0;bottom:0;padding-left:5px;border: solid 4px white;margin: auto;"&gt;
 &lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. See here for &lt;a href=day2-session0.pdf&gt;PDF &lt;i class="fas fa-file-pdf"&gt;&lt;/i&gt;&lt;/a&gt;. 
 &lt;/div&gt;
+
+.white[Push the **right arrow key** to see the next slide.]
+
 
 
 ---
@@ -52,7 +54,7 @@ class: hide-slide-number title-slide
 
 .center.shade_black.animated.bounceInUp.slower[
 &lt;br&gt;&lt;br&gt;
-## &lt;span style="color: #ccf2ff; text-shadow: 10px 10px 100px white;"&gt;Introduction&lt;/span&gt;
+## Introduction
 
 &lt;br&gt;
 
@@ -65,7 +67,7 @@ Department of Econometrics and Business Statistics
 <span>&lt;i class="fab  fa-twitter faa-float animated faa-fast "&gt;&lt;/i&gt;</span>  @visnut
 
 .bottom_abs.width100.bg-black[
-12 Nov 2020 @ Statistical Society of Australia | Zoom
+16th April 2021 @ Statistical Society of Australia | Zoom
 ]
 
 
@@ -119,65 +121,6 @@ Monash University
 
 &lt;/div&gt;
 
----
-
-&lt;div class="grid" style="grid: 1fr / 1.2fr 2fr;"&gt;
-&lt;div class="item white monash-bg-blue border-right"&gt;
-&lt;br&gt;
-
-&lt;div class="circle-image"&gt;
-&lt;center&gt;
-&lt;img src="images/FanCheng.png" width = "200px"/&gt;
-&lt;/center&gt;
-&lt;/div&gt;
-
-**Fan Cheng** &lt;br&gt;
-*PhD Student*&lt;br&gt;
-Monash University
-
-&lt;br&gt;
-
-&lt;i class="fas fa-globe"&gt;&lt;/i&gt; https://fancheng.me/
-
-&lt;i class="fas fa-envelope"&gt;&lt;/i&gt; Fan.Cheng@monash.edu
-
-&lt;i class="fab fa-twitter"&gt;&lt;/i&gt; @fanchengfc
-
-&lt;/div&gt;
-
-&lt;div class="item"&gt;
-
-&lt;h1&gt;About your helper&lt;/h1&gt;
-
-&lt;ul&gt;
-&lt;li&gt;I am a second-year PhD student in Statistics at Monash&lt;/li&gt;
-&lt;li&gt;I work for the Monash Data Fluency team to teach workshops on R, Python, Git and Unix&lt;/li&gt;
-&lt;li&gt;My research project is about manifold learning based on empirical probability distributions. If you are interested, I am more than happy to talk about it :)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-
----
-background-image: url(images/d2bg2.jpg)
-background-size: 30%
-background-position: 100% 0%
-class: middle
-
-
-There are new participants today, so please 
-
-.font_large[Introduce yourself (again) in the chat!]
-
-&lt;br&gt;
-
-* What's your profession?  
-* Where do you live?
-* What's your hobby? 
-* What's one thing you want everyone &lt;br&gt; to know (about you)? 
-
-
 
 ---
 
@@ -187,16 +130,16 @@ There are new participants today, so please
 
 Time | Activity 
 :----|:---
-1.00-1.30 | Registration + Installation Help
-1.30-2.00 | **Lesson 1:** Check your `ggplot2` knowledge
-2.00-2.15 |  *Break out session*
-2.15-2.45 | **Lesson 2:** Making maps 
-2.45-3.00 | *Break out session*
-3.00-3.30 | *Coffee Break*
-3.30-4.00 | **Lesson 3:** Getting your plots to talk back 
-4.00-4.15 | *Break out session*
-4.15-4.45 | **Lesson 4:** Determining best plot design
-4.45-5.00 | *Break out session* + Conclusion
+9.00-9.30 | Registration + Installation Help
+9.30-10.00 | **Lesson 1:** Check your `ggplot2` knowledge
+10.00-10.15 |  *Break out session*
+10.15-10.45 | **Lesson 2:** Making maps 
+10.45-11.00 | *Break out session*
+11.00-11.30 | *Coffee Break*
+11.30-12.00 | **Lesson 3:** Getting your plots to talk back 
+12.00-12.15 | *Break out session*
+12.15-12.45 | **Lesson 4:** Determining best plot design
+12.45-13.00 | *Break out session* + Conclusion
 
 
 ---
@@ -273,62 +216,72 @@ devtools::session_info()
 ## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.0.1 (2020-06-06)
-##  os       macOS Catalina 10.15.7      
+##  os       macOS  10.16                
 ##  system   x86_64, darwin17.0          
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_AU.UTF-8                 
 ##  ctype    en_AU.UTF-8                 
 ##  tz       Australia/Melbourne         
-##  date     2020-11-12                  
+##  date     2021-04-07                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package     * version date       lib source                           
-##  anicon        0.1.0   2020-06-19 [1] Github (emitanaka/anicon@0b756df)
-##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
-##  backports     1.1.8   2020-06-17 [1] CRAN (R 4.0.1)                   
-##  callr         3.4.3   2020-03-28 [1] CRAN (R 4.0.0)                   
-##  cli           2.1.0   2020-10-12 [1] CRAN (R 4.0.2)                   
-##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
-##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
-##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.1)                   
-##  digest        0.6.26  2020-10-17 [1] CRAN (R 4.0.2)                   
-##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
-##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.0)                   
-##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
-##  fs            1.4.2   2020-06-30 [1] CRAN (R 4.0.2)                   
-##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
-##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.1)                   
-##  icon          0.1.0   2020-06-19 [1] Github (emitanaka/icon@8458546)  
-##  knitr         1.29.5  2020-09-09 [1] Github (yihui/knitr@7d2dd40)     
-##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
-##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
-##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.1)                   
-##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.0)                   
-##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
-##  processx      3.4.3   2020-07-05 [1] CRAN (R 4.0.1)                   
-##  ps            1.3.3   2020-05-08 [1] CRAN (R 4.0.2)                   
-##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
-##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.1)                   
-##  rlang         0.4.8   2020-10-08 [1] CRAN (R 4.0.2)                   
-##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.1)                   
-##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
-##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
-##  stringi       1.4.6   2020-02-17 [1] CRAN (R 4.0.2)                   
-##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
-##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
-##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
-##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
-##  xaringan      0.16    2020-03-31 [1] CRAN (R 4.0.0)                   
-##  xfun          0.16    2020-07-24 [1] CRAN (R 4.0.2)                   
-##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
+##  package     * version    date       lib source                           
+##  anicon        0.1.0      2020-06-21 [1] Github (emitanaka/anicon@0b756df)
+##  assertthat    0.2.1      2019-03-21 [2] CRAN (R 4.0.0)                   
+##  bslib         0.2.4.9002 2021-03-31 [1] Github (rstudio/bslib@62f0bfe)   
+##  cachem        1.0.4      2021-02-13 [1] CRAN (R 4.0.2)                   
+##  callr         3.6.0      2021-03-28 [1] CRAN (R 4.0.1)                   
+##  cli           2.3.1      2021-02-23 [1] CRAN (R 4.0.2)                   
+##  crayon        1.4.1      2021-02-08 [1] CRAN (R 4.0.2)                   
+##  desc          1.2.0      2018-05-01 [2] CRAN (R 4.0.0)                   
+##  devtools      2.3.2      2020-09-18 [1] CRAN (R 4.0.2)                   
+##  digest        0.6.27     2020-10-24 [1] CRAN (R 4.0.2)                   
+##  ellipsis      0.3.1      2020-05-15 [2] CRAN (R 4.0.0)                   
+##  evaluate      0.14       2019-05-28 [2] CRAN (R 4.0.0)                   
+##  fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.0.2)                   
+##  fs            1.5.0      2020-07-31 [1] CRAN (R 4.0.2)                   
+##  glue          1.4.2      2020-08-27 [1] CRAN (R 4.0.2)                   
+##  htmltools     0.5.1.1    2021-01-22 [1] CRAN (R 4.0.2)                   
+##  icon          0.1.0      2020-06-21 [1] Github (emitanaka/icon@8458546)  
+##  jquerylib     0.1.3      2020-12-17 [1] CRAN (R 4.0.2)                   
+##  jsonlite      1.7.2      2020-12-09 [1] CRAN (R 4.0.2)                   
+##  knitr         1.31.6     2021-03-16 [1] local                            
+##  lifecycle     1.0.0      2021-02-15 [1] CRAN (R 4.0.2)                   
+##  magrittr      2.0.1      2020-11-17 [1] CRAN (R 4.0.2)                   
+##  memoise       2.0.0      2021-01-26 [1] CRAN (R 4.0.2)                   
+##  pkgbuild      1.2.0      2020-12-15 [1] CRAN (R 4.0.2)                   
+##  pkgload       1.1.0      2020-05-29 [2] CRAN (R 4.0.0)                   
+##  prettyunits   1.1.1      2020-01-24 [2] CRAN (R 4.0.0)                   
+##  processx      3.5.0      2021-03-23 [1] CRAN (R 4.0.2)                   
+##  ps            1.6.0      2021-02-28 [1] CRAN (R 4.0.2)                   
+##  purrr         0.3.4      2020-04-17 [2] CRAN (R 4.0.0)                   
+##  R6            2.5.0      2020-10-28 [1] CRAN (R 4.0.2)                   
+##  remotes       2.2.0      2020-07-21 [1] CRAN (R 4.0.2)                   
+##  rlang         0.4.10     2020-12-30 [1] CRAN (R 4.0.2)                   
+##  rmarkdown     2.7        2021-02-19 [1] CRAN (R 4.0.2)                   
+##  rprojroot     2.0.2      2020-11-15 [1] CRAN (R 4.0.2)                   
+##  sass          0.3.1.9001 2021-03-31 [1] Github (rstudio/sass@4b98868)    
+##  sessioninfo   1.1.1      2018-11-05 [2] CRAN (R 4.0.0)                   
+##  stringi       1.5.3      2020-09-09 [2] CRAN (R 4.0.2)                   
+##  stringr       1.4.0      2019-02-10 [2] CRAN (R 4.0.0)                   
+##  testthat      3.0.2      2021-02-14 [1] CRAN (R 4.0.2)                   
+##  usethis       2.0.1      2021-02-10 [1] CRAN (R 4.0.2)                   
+##  withr         2.4.1      2021-01-26 [1] CRAN (R 4.0.2)                   
+##  xaringan      0.20.1     2021-03-25 [1] Github (yihui/xaringan@1cca625)  
+##  xfun          0.22       2021-03-11 [1] CRAN (R 4.0.2)                   
+##  yaml          2.2.1      2020-02-01 [1] CRAN (R 4.0.2)                   
 ## 
-## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
+## [1] /Users/etan0038/Library/R/4.0/library
+## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
 ```
 ]
 
 
 These slides are licensed under &lt;br&gt;&lt;center&gt;&lt;a href="https://creativecommons.org/licenses/by-sa/3.0/au/"&gt;&lt;img src="images/cc.svg" style="height:2em;"/&gt;&lt;img src="images/by.svg" style="height:2em;"/&gt;&lt;img src="images/sa.svg" style="height:2em;"/&gt;&lt;/a&gt;&lt;/center&gt;
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark-latest.min.js"></script>
