@@ -471,7 +471,7 @@ How I wrangled this data
 ```
 
 <div class="font_small">
-(note: teaching wrangling is not part of this workshop, please see <a href="https://biometrics2019.netlify.app/session2.html" target="_blank">here</a> if you want to learn more, or register for workshop on data wrangling <a href="https://www.statsoc.org.au/event-4012234">here</a>)
+(note: teaching wrangling is not part of this workshop, please see <a href="http://emitanaka.org/datawrangle-workshop-ssavic" target="_blank">here</a> if you want to learn more)
 </div>
 
 ---
