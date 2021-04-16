@@ -161,7 +161,7 @@ limited capabilities
 load(here::here("data/oz_map.rda"))
 p <- ggmap(oz_map) + 
   geom_point(data = platypus, 
-             aes(x = Longitude, y = Latitude, label=eventDate), 
+             aes(x = Longitude, y = Latitude, label=`Event Date - parsed`), 
              alpha = 0.5, colour = "orange") + 
   theme_map()
 # ggplotly(p) #<<

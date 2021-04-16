@@ -97,7 +97,8 @@ tb_oz %>%
   ggplot(aes(x=age_group, y=count, fill=age_group)) +
   geom_bar(stat="identity") + 
   facet_wrap(~sex, ncol=6) +
-  scale_fill_brewer("Sex", palette="Dark2") 
+  scale_fill_brewer("Age", palette="Dark2") +
+  xlab("Age")
 ```
 
 ### Exercise 1.6: Facetted pie chart for 2012
