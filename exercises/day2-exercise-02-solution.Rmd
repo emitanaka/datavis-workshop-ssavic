@@ -117,5 +117,11 @@ ggmap(oz_map) +
              aes(x=Longitude, y=Latitude), 
      colour="purple") + 
   theme_map()
+ggmap(oz_map) + 
+  geom_density2d_filled(data=platypus, 
+             aes(x=Longitude, y=Latitude,
+                 colour = ..density..), alpha=0.5) + 
+  theme_map() +
+  scale_fill_viridis_d(option = "inferno")
 ```
 
