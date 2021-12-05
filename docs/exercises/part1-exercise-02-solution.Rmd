@@ -1,0 +1,168 @@
+---
+title: "Part 1 Exercise 2: Taming data and multiples"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r, child="exercise-setup.Rmd"}
+```
+```{r setup, include = FALSE}
+library(agridat) # for `nass.wheat`, `nass.corn`, `nass.rice` datasets
+library(catdata) # for `glass` data
+library(tidyverse) # contains ggplot2, dplyr, tidyr, etc
+select <- dplyr::select # seems to be conflicting with something
+filter <- dplyr::filter # conflicts with stats::filter
+data(glass)
+knitr::opts_chunk$set(
+  fig.path = "images/part1-exercise-02/",
+  class.source = "solution"
+)
+```
+
+## Exercise 2.1
+
+```{r part1-exercise-01}
+df <- bind_rows(mutate(nass.wheat, crop = "Wheat"),
+                mutate(nass.corn, crop = "Corn"),
+                mutate(nass.soybean, crop = "Soy")) %>% 
+  filter(state %in% c("New York", "Michigan", "Indiana", "Montana", "Washington"))
+
+ggplot(df, aes(year, yield)) + 
+  geom_point() + 
+  geom_smooth() + 
+  facet_grid(state ~ crop)
+```
+
+## Exercise 2.2
+
+```{r part1-exercise-02}
+ggplot(nass.corn, aes(yield, fill = cut(year, 4, dig.lab = 4))) + 
+  geom_density(alpha = 0.6) +
+  labs(fill = "Period", x = "Average Yield", y = "Density")
+```
+
+## Exercise 2.3
+
+```{r part1-exercise-03}
+df2 <- left_join(rename(nass.wheat, 
+                        yield_wheat = yield, acres_wheat = acres), 
+                 rename(nass.corn, 
+                        yield_corn = yield, acres_corn = acres),
+                 by = c("year", "state"))
+
+ggplot(df2, aes(yield_corn, yield_wheat)) + 
+  geom_point(aes(color = year)) +
+  geom_density_2d(color = "black") + 
+  labs(x = "Yield of corn", y = "Yield of wheat", color = "Year")
+```
+
+## Exercise 2.4
+
+```{r part1-exercise-04}
+df3 <- bind_rows(mutate(nass.wheat, crop = "Wheat"),
+                mutate(nass.corn, crop = "Corn"),
+                mutate(nass.soybean, crop = "Soy")) 
+
+ggplot(df3, aes(crop, yield)) + 
+  geom_violin() + 
+  geom_boxplot(width = 0.1)
+```
+
+## Exercise 2.5
+
+
+```{r part1-exercise-05}
+df4 <- nass.wheat %>% 
+  filter(year == 2011) 
+df4highlight <- filter(df4, acres > 4000000 | yield > 80)
+
+ggplot(df4, aes(acres, yield)) + 
+  geom_point() + 
+  geom_point(data = df4highlight, color = "red") + 
+  geom_text(data = df4highlight, aes(label = state), nudge_y = 5) +
+  ggtitle("Year 2011")
+```
+
+## Exercise 2.6
+
+```{r part1-exercise-06}
+df5 <- glass %>% 
+  mutate(id = paste0("glass", 1:n())) %>% 
+  pivot_longer(-c(RI, type, id), names_to = "element", values_to = "oxide")
+
+ggplot(df5, aes(RI, oxide)) + 
+  geom_point(aes(color = type)) + 
+  facet_wrap(~element, scale = "free_y") + 
+  labs(x = "Refractive index", y = "Oxide content", color = "Glass")
+```
+
+## Exercise 2.7
+
+```{r part1-exercise-07}
+ggplot(df5, aes(type, oxide)) + 
+  geom_violin() + 
+  facet_wrap(~element, scale = "free_y")
+```
+
+## Exercise 2.8
+
+```{r part1-exercise-08}
+elements <- sort(c("Na", "Mg", "Al", "Si", "K", "Ca", "Ba", "Fe"))
+nele <- length(elements)
+# this uses `purrr` but many other ways to do this
+# below is like using is two for loops, 
+# but `purrrr::map_dfr` ensures the return type is data frame appended by row
+df6 <- map_dfr(1:(nele - 1),  
+               function(i) {
+                 map_dfr((i + 1):nele, function(j) {
+                   ele1 <- elements[i]
+                   ele2 <- elements[j]
+                   mutate(glass, 
+                          element1 = ele1, element2 = ele2, 
+                          oxide1 = glass[[ele1]], oxide2 = glass[[ele2]]) %>% 
+                   select(RI, type, oxide1, oxide2, element1, element2)
+                })}) 
+
+cordat <- cor(select(glass, all_of(elements))) %>% 
+  as_tibble() %>% 
+  mutate(element1 = colnames(.)) %>% 
+  pivot_longer(-element1, 
+               names_to = "element2",
+               values_to = "cor") %>% 
+  mutate(i1 = as.integer(factor(element1)),
+         i2 = as.integer(factor(element2))) %>% 
+  filter(i1 > i2) %>% 
+  # get the center points
+  rowwise() %>% 
+  mutate(oxide1 = mean(range(glass[[element1]])),
+         oxide2 = mean(range(glass[[element2]])))
+
+# also check out `GGally::ggpairs(select(glass, all_of(elements)))`
+  
+ggplot(df6, aes(oxide1, oxide2)) + 
+  geom_point() + 
+  # remember formula is y ~ x
+  facet_grid(element2 ~ element1, scales = "free") +
+  geom_text(data = cordat, aes(label = round(cor, 2)), color = "red", size = 3)
+```
+
+## Exercise 2.9
+
+```{r part1-exercise-09}
+fit <- lm(Al ~ Ba, data = glass) %>% 
+  broom::augment()
+ggplot(fit, aes(sample = .resid)) + 
+  geom_qq() + 
+  geom_qq_line(color = "red")
+```
+
+## Exercise 2.10
+
+```{r part1-exercise-10}
+ggplot(fit, aes(Ba, .resid)) + 
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_point() +
+  labs(y = "Residual")
+```

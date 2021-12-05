@@ -1,0 +1,57 @@
+---
+title: "Data Visualisation with R"
+author: ["Emi Tanaka", "Di Cook"]
+date: "6th December 2021"
+---
+
+
+Welcome to the Data Visualisation with R Workshop!
+
+This workshop is organised by [Statistical Society of Australia](https://www.statsoc.org.au/event-4476797) and delivered by Prof Di Cook and Dr Emi Tanaka.
+
+## About the workshop:
+
+Data visualisation is a key statistical tool for effective communication and to understand aspects of data and models. The statistical language R is used widely for data analysis and visualization, e.g. the [BBC Visual and Data Journalism team uses ggplot2 R-package to create production-ready charts](https://medium.com/bbc-visual-and-data-journalism/how-the-bbc-visual-and-data-journalism-team-works-with-graphics-in-r-ed0b35693535). This workshop (on Day 1) will teach you how to create production-ready graphics using the grammar of graphics implemented in ggplot2 R-package. In addition, the workshop (on Day 2) will teach you how to construct more complex plots, including maps, and discuss inference for statistical graphics to understand if what we see in a plot is really there. The workshop will be hands-on with plenty of practical examples.
+
+## About the presenters:
+
+Dianne Cook is Professor of Business Analytics at Monash University in Melbourne, Australia.  She is a world leader in data visualisation, especially the visualisation of high-dimensional data using tours with low-dimensional projections, and projection pursuit.  She is currently focusing on bridging the gap between exploratory graphics and statistical inference.  Di is a Fellow of the American Statistical Association, past editor of the Journal of Computational and Graphical Statistics, current editor of the R Journal, elected Ordinary Member of the R Foundation, and elected member of the International Statistical Institute. 
+
+Emi Tanaka is a Lecturer in Statistics at Monash University and the incoming President of SSA Vic. She is currently working on a statistical theory for conducting inference using data plots and is an early career researcher in multi-level modelling, and experimental design. She is an experienced and enthusiastic R user and instructor, and regularly teaches university courses and workshops to the broader community on data visualisation, including ggplot2.
+
+## Target audience:
+
+This workshop is suitable for those who know how to use R but are not familiar or comfortable with ggplot2 or would like a refresher on ggplot2.  
+
+## Learning objectives:
+
+### Part 1: Dipping Your Toes into Data Visualization with R
+Presented by Emi Tanaka
+
+* Review of tidy data format
+* Basics of the grammar of graphics
+* Drawing the basic data plot types (barchart, pie chart, histogram, density plot, scatterplot, boxplot) utilising a range of common geoms and variable mappings
+* Choosing colour wisely
+* All about scales, transforming data, setting limits, changing coordinate systems, axis specifications, ordering levels of categorical axes
+* Jazzing up your plot with different themes, plot annotations and combining plots together to make a publication-ready plot
+
+### Part 2: Diving Deeper into Data Visualization with R
+Presented by Di Cook
+
+* Check your knowledge, a review of basic plotting with the grammar
+* Expanding your graphics toolbox to mapping, making choropleth maps, using map images as a base
+* Making your plots speak. Adding interactive elements including mouse-over labels, and sliders for controlling parameters, using plotly. Animating plots using gganimate.
+* Learn how to decide on the best plot design for a problem, and how to  determine if what you see is a real structure.  
+
+## Requirements:
+
+* basic R knowledge (e.g. you have used R to load data, create simple visualisations, perform basic analyses and write simple functions or more specifically, you are familiar with concepts in Cookbook for R by Winston Chang)
+* basic statistics (e.g. simple linear regression, hypothesis testing, basic summary statistics and plots)
+* computer (with ability to install R and R-packages), microphone and web camera 
+* stable internet connection
+* Install the video conferencing software, zoom and know how to use zoom
+
+## Desirable:
+
+* Know about tidy data (i.e. importing data and putting data into the right format for plotting)
+* Some familiarity with tidyverse

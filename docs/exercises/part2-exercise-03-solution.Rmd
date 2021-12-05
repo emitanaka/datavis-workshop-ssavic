@@ -1,0 +1,144 @@
+---
+title: "Part 2 Exercise 3 Solution: Getting your plots to talk back"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+Push the `knit` button!
+
+
+```{r setup, child="exercise-setup.Rmd", eval = file.exists("exercise-setup.Rmd")}
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.path = "images/part2-exercise-03/",
+  class.source = "solution",
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  fig.height = 3,
+  fig.width = 6,
+  cache = FALSE
+)
+```
+
+```{r pkgs, message = FALSE, warning = FALSE}
+library(tidyverse) # contains ggplot2, dplyr, tidyr, etc
+filter <- dplyr::filter
+select <- dplyr::select
+library(leaflet)
+library(plotly)
+library(gganimate)
+library(ggthemes)
+library(lubridate)
+```
+
+## `tuberculosis` dataset
+
+```{r tb-data}
+tb <- read_csv(here::here("data/TB_notifications_2020-07-01.csv")) %>% 
+  dplyr::select(country, iso3, year, new_sp_m04:new_sp_fu) %>%
+  pivot_longer(cols=new_sp_m04:new_sp_fu, names_to="sexage", values_to="count") %>%
+  mutate(sexage = str_replace(sexage, "new_sp_", "")) %>%
+  mutate(sex=substr(sexage, 1, 1), 
+         age=substr(sexage, 2, length(sexage))) %>%
+  dplyr::select(-sexage) %>%
+  filter(!(age %in% c("04", "014", "514", "u"))) %>%
+  filter(year > 1996, year < 2013) %>%
+  mutate(age_group = factor(age, 
+                            labels = c("15-24", "25-34", "35-44", 
+                                       "45-54", "55-64", "65-"))) %>%
+  dplyr::select(country, year, age_group, sex, count)
+
+# Filter Australia
+tb_oz <- tb %>% 
+  filter(country == "Australia") 
+
+# Aggregate Australian counts by year
+tb_oz_yearly <- tb_oz %>%
+  group_by(country, year) %>%
+  summarise(count = sum(count))
+```
+
+## `platypus` dataset
+
+```{r filter-platypus}
+load(here::here("data/platypus.rda")) 
+platypus <- platypus %>%
+  mutate(year = year(eventDate)) %>%
+  filter(year > 2018) 
+```
+
+
+### Exercise 3.1: Leaflet with different colour
+
+```{r part2-exercise-01, echo = T, fig.width=4}
+platypus %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(
+    radius=1, opacity = 0.5, color = "purple", label = ~eventDate,
+    lat = ~Latitude, lng = ~Longitude)
+```
+
+### Exercise 3.2: Add colour to plotly highlighting 
+
+Remember this code:
+
+```{r}
+tb_action <- highlight_key(tb_oz, ~age_group)
+```
+```{r eval=FALSE}
+p2 <- ggplot(tb_action, aes(x=year, y=count)) +
+  geom_line(aes(group=age_group)) +
+  geom_smooth() + 
+  facet_wrap(~sex)  
+
+gg <- ggplotly(p2, height = 300, width = 600) %>%
+   layout(title = "Click on a line to highlight an age group")
+
+highlight(gg)
+```
+
+Use this code to make the base plot, and then check that highlighting still works:
+
+```{r part2-exercise-02, echo = T, fig.width=10, fig.height=4}
+p2 <- ggplot(tb_action, aes(x=year, y=count)) +
+  geom_line(aes(colour=age_group, group=age_group)) +
+  facet_wrap(~sex)  
+p2
+```
+
+### Exercise 3.3: Animate TB counts for Australia on a map
+
+```{r part2-exercise-03, echo = T, fig.width=3}
+world_map <- map_data("world")
+
+australia <- world_map %>%
+  filter(region == "Australia")
+
+tb_yr_map <- australia %>% 
+  left_join(tb_oz_yearly, by=c("region" = "country")) 
+
+tb_map <- ggplot(tb_yr_map, 
+                 aes(x=long, y=lat, group=group)) + 
+    geom_polygon(aes(fill=count), #<<
+             color="grey70", size=0.1, na.rm=TRUE) +  #<<
+    scale_fill_distiller("Count", palette = "RdPu",
+                         direction = 1, 
+                         limits = c(0, 500)) +
+    guides(col = guide_legend(nrow=1)) +
+    theme_map() +
+    geom_text(aes(x=135, y=-25, 
+                  label = paste0(round(year, 0), ": ",
+                                 round(count, 0))),
+              colour="white", size=5) +
+    theme(legend.position = "none") +
+    transition_states(year, 1, 10, wrap=FALSE) #<<
+animate(tb_map, nframes=80, fps=10, #<<
+        width=2, height=2, units = "in", res = 150) 
+```
+

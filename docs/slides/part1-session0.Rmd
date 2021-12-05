@@ -1,0 +1,295 @@
+---
+title: "Data Visualisation with R"
+subtitle: "Getting started"
+author: "Emi Tanaka & Di Cook"
+email: "emi.tanaka@monash.edu"
+date: "6th Dec 2021 @ Statistical Society of Australia NSW Branch | Zoom"
+length: "360 minutes"
+color_theme: "yellow"
+pdflink: "session0.pdf"
+titleslide_bgimg: "images/bg4.jpg"
+output:
+  xaringan::moon_reader:
+    css:
+      - ninjutsu 
+      - "assets/animate.css"
+      - "assets/custom.css"
+      - "assets/fira-code.css"
+      - "assets/boxes.css"
+      - "assets/styles.css"
+      - "assets/monash-brand.css"
+      - "assets/table.css"
+    self_contained: false 
+    seal: false 
+    chakra: 'libs/remark-latest.min.js'
+    lib_dir: libs
+    mathjax: "assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    nature:
+      highlightStyle: github
+      highlightLanguage: r 
+      highlightLines: true
+      highlightSpans: false 
+      countIncrementalSlides: false
+      slideNumberFormat: '%current%/%total%'
+      navigation:
+        scroll: false 
+        touch: true
+        click: false
+      ratio: '16:9'
+---
+
+```{r, include = FALSE}
+current_file <- knitr::current_input()
+```
+```{r titleslide, child="assets/titleslide.Rmd"}
+```
+
+---
+
+<div class="grid" style="grid: 1fr / 1.2fr 2fr;">
+<div class="item white monash-bg-blue border-right">
+<br>
+
+<div class="circle-image">
+<center>
+<img src="images/avatar.png" width = "150px"/>
+</center>
+</div>
+
+**Emi Tanaka** <br>
+*Lecturer in Statistics*<br>
+Monash University
+
+<br>
+
+<i class="fas fa-globe"></i> https://emitanaka.org/
+
+<i class="fas fa-envelope"></i> emi.tanaka@monash.edu
+
+<i class="fab fa-twitter"></i> @statsgen
+
+</div>
+
+<div class="item">
+
+<h1>About your instructor</h1>
+
+<ul>
+<li>I moved to Melbourne in Jan 2020 to start my job at Monash</li>
+<li>I teach R at university courses as well as use it daily for research and hobby <i class="fab  fa-reddit-alien"></i></li>
+<li>If you ever wonder who answers those stackoverflow questions, I'm one of those magic fairies <i class="fab fa-stack-overflow"></i></li>
+
+<center>
+<a href="https://stackexchange/users/10113966/emi"><img src="https://stackoverflow.com/users/flair/10113966.png" width="208" height="58" alt="profile for Emi at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Emi at Stack Overflow, Q&amp;A for professional and enthusiast programmers" style="border:solid 2px black;"></a>
+</center>
+<li>My main statistical application is agriculture and bioinformatics; these days I do more software</li>
+</ul>
+</div>
+
+</div>
+
+---
+
+<div class="grid" style="grid: 1fr / 1.2fr 2fr;">
+<div class="item white monash-bg-blue border-right">
+<br>
+
+<div class="circle-image">
+<center>
+<img src="http://dicook.org/img/dicook-2019.png" width = "150px"/>
+</center>
+</div>
+
+**Di Cook** <br>
+*Professor of Business Analytics*<br>
+Monash University
+
+<br>
+
+<i class="fas fa-globe"></i> https://dicook.org/
+
+<i class="fas fa-envelope"></i> dicook@monash.edu
+
+<i class="fab fa-twitter"></i> @visnut
+
+</div>
+
+<div class="item">
+
+<h1>About your instructor</h1>
+
+<ul>
+<li>In July 2015 I moved home to Australia after many years of education and work in the USA</li>
+<li>I have been using R since it first emerged from Auckland, NZ in 1995, and I am an elected member of the R Foundation `r anicon::faa("quidditch", animate = "spin", anitype = "hover")`</li>
+<li>I am one of four editors of the R Journal editorial team that publishes articles about R packages `r anicon::faa("book", animate = "tada", anitype = "hover")`</li>
+
+<li>My main statistical application areas are sports, ecology and bioinformatics; and I like to develop new software</li>
+</ul>
+</div>
+
+</div>
+
+
+---
+
+<div class="grid" style="grid: 1fr / 1.3fr 2fr;">
+<div class="item white monash-bg-blue border-right">
+<br>
+
+<div class="circle-image">
+<center>
+<img src="images/daidai.jpg" width = "200px"/>
+</center>
+</div>
+
+**Danyang Dai** <br>
+*Research & Teaching Assistant*<br>
+Monash University
+
+<br>
+
+<i class="fas fa-globe"></i> https://dai.netlify.app/
+
+<i class="fas fa-envelope"></i> Danyang.Dai@monash.edu
+
+<i class="fab fa-twitter"></i> @Daidaidai2014
+
+</div>
+
+<div class="item">
+
+<h1>About your helper</h1>
+
+<ul>
+<li>I am Research/Teaching Assistant at Monash. I teaches Data visualisation and Statistical Thinking.</li>
+<li>I volunteer at R-Ladies Melbourne and presented workshops about RMarkdown and Blogdown.</li>
+<li>I am currently developing introduction to R materials with Emi and working on CYCLED Study at the School of Public Health and Preventive Medicine.</li>
+</ul>
+</div>
+
+</div>
+
+
+---
+
+class: center middle
+
+
+<i class="fas fa-user-alt monash-blue font_large animated bounce"></i>
+
+.font_large.monash-blue[Introduce yourself in the chat!]
+
+<br>
+
+What's your profession?  
+
+Where do you live?
+
+What's your hobby? 
+
+What's would you like for people to know about you? 
+
+
+
+---
+
+# Schedule for **Part 1** 
+
+<br>
+
+Time | Activity 
+:----|:---
+8.45-9.00 | Registration + Installation Help
+9.00-9.30 | **Lesson 1:** Getting started with grammar of graphics
+9.30-9.45 |  *Break out session*
+9.45-10.15 | **Lesson 2:**  Multiple layers, facetting and tidying your data
+10.15-10.30 | *Break out session*
+10.30-11.00 | *Coffee Break*
+11.00-11.30 | **Lesson 3:** Scales and color
+11.30-11.45 | *Break out session*
+11.45-12.15 | **Lesson 4:** Publication-ready plots
+12.15-12.30 | *Break out session* 
+
+
+---
+
+# Schedule for **Part 2**
+
+<br>
+
+Time | Activity 
+:----|:---
+1.30-2.00 | **Lesson 1:** Check your `ggplot2` knowledge
+2.00-2.15 |  *Break out session*
+2.15-2.45 | **Lesson 2:** Making maps 
+2.45-3.00 | *Break out session*
+3.00-3.30 | *Coffee Break*
+3.30-4.00 | **Lesson 3:** Getting your plots to talk back 
+4.00-4.15 | *Break out session*
+4.15-4.45 | **Lesson 4:** Determining best plot design
+4.45-5.00 | *Break out session* + Conclusion
+
+---
+
+
+# Getting Started
+
+.center[
+
+
+
+.blue.font_large[<i class="fas fa-globe"></i> http://emitanaka.org/datavis-workshop-ssavic/]
+
+
+
+
+]
+
+
+.info-box[
+
+.red[**If you had any issues installing any packages or software**] go to:<br>
+.center[
+.blue[<i class="fas fa-link"></i>  https://rstudio.cloud/project/1487877]
+]
+
+
+and save a permanent copy to your RStudio Cloud account for the R exercises.
+
+]
+
+
+.center[
+.font_large[<i class="fas fa-download"></i> Click [here](https://github.com/emitanaka/datavis-workshop-ssavic/archive/refs/heads/master.zip) to download all materials as a ZIP file.]
+]
+
+---
+
+class: center
+
+# Help me!
+
+<br><br>
+
+You can write in the chat.
+
+<br>
+
+You can ask (unmute yourself).
+
+<br>
+
+You can raise hand from zoom under Participants.
+
+<img src="images/zoom-help.png">
+
+<br>
+
+We'll come around in breakout sessions.
+
+
+
+---
+
+```{r endslide, child="assets/endslide.Rmd"}
+```

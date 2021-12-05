@@ -1,0 +1,117 @@
+---
+title: "Part 2 Exercise 4 Solution: Determining the best plot design"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+Push the `knit` button!
+
+
+```{r setup, child="exercise-setup.Rmd", eval = file.exists("exercise-setup.Rmd")}
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.path = "images/part2-exercise-04/",
+  class.source = "solution",
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  fig.height = 3,
+  fig.width = 10
+)
+```
+
+```{r pkgs, message = FALSE, warning = FALSE}
+library(tidyverse) # contains ggplot2, dplyr, tidyr, etc
+```
+
+## `tuberculosis` dataset
+
+```{r tb-data}
+tb <- read_csv(here::here("data/TB_notifications_2020-07-01.csv")) %>% 
+  dplyr::select(country, iso3, year, new_sp_m04:new_sp_fu) %>%
+  pivot_longer(cols=new_sp_m04:new_sp_fu, names_to="sexage", values_to="count") %>%
+  mutate(sexage = str_replace(sexage, "new_sp_", "")) %>%
+  mutate(sex=substr(sexage, 1, 1), 
+         age=substr(sexage, 2, length(sexage))) %>%
+  dplyr::select(-sexage) %>%
+  filter(!(age %in% c("04", "014", "514", "u"))) %>%
+  filter(year > 1996, year < 2013) %>%
+  mutate(age_group = factor(age, 
+                            labels = c("15-24", "25-34", "35-44", 
+                                       "45-54", "55-64", "65-"))) %>%
+  dplyr::select(country, year, age_group, sex, count)
+
+# Filter Australia
+tb_oz <- tb %>% 
+  filter(country == "Australia") 
+```
+
+### Exercise 4.1: Which plot arrangement better reveals the spike in counts?
+
+```{r part2-exercise-01, echo = F, fig.show='hold'}
+ggplot(tb_oz, aes(x=year, y=count, fill=sex)) +
+  geom_bar(stat="identity") + 
+  facet_wrap(~age_group, ncol=6) +
+  scale_fill_brewer("Sex", palette="Dark2") 
+ggplot(tb_oz, aes(x=year, y=count, fill=sex)) +
+  geom_bar(stat="identity", position="dodge") + 
+  facet_wrap(~age_group, ncol=6) +
+  scale_fill_brewer("Sex", palette="Dark2") 
+```
+
+The side-by-side bar chart reveals the spikes better. It is allowing comparison of heights because of proximity. The facetted bar chart might be better still. 
+
+
+### Exercise 4.2: Rearrange this plot to better answer
+
+"Is the proportion of TB incidence in males relative to females increasing with age?"
+
+```{r part2-exercise-02, echo = T, fig.height = 4}
+tb_oz %>% 
+  filter(year == 2012) %>%
+  ggplot(aes(x=1, y=count, fill=age_group)) +
+  geom_bar(stat="identity", position="fill") + 
+  facet_wrap(~sex, ncol=6) +
+  scale_fill_brewer("", palette="Dark2") +
+  xlab("") + ylab("") +
+  coord_polar(theta = "y")
+```
+
+```{r part2-exercise-02s, eval=T}
+tb_oz %>% 
+  filter(year == 2012) %>%
+  mutate(age_group = as.numeric(age_group)) %>%
+  ggplot(aes(x=age_group, y=count, colour=sex)) +
+  geom_point() +
+  geom_smooth(method="lm", se=F) +
+  scale_colour_brewer("", palette="Dark2")
+```
+
+### Exercise 4.3: This plot is missing something
+
+By using proportions by sex, this plot lost some trend difference between the sexes over years. Fix it.
+
+```{r part2-exercise-3, echo = T}
+tb_oz %>% group_by(year, age_group) %>% 
+  summarise(p = count[sex=="m"]/sum(count)) %>%
+  ggplot(aes(x=year, y=p)) +
+    geom_hline(yintercept = 0.50, colour="white", size=2) +
+    geom_point() +
+    geom_smooth(se=F) +
+    facet_wrap(~age_group, ncol=6) +
+    ylab("proportion of males")
+```
+
+
+```{r part2-exercise-03s, eval=T}
+tb_oz %>% 
+    ggplot(aes(x=year, y=count, colour=sex)) +
+    geom_point() +
+    geom_smooth(method="lm", se=F) +
+    facet_wrap(~age_group, ncol=6) +
+    scale_colour_brewer("", palette="Dark2")
+```

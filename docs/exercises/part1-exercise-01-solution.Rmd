@@ -1,0 +1,95 @@
+---
+title: "Part 1 Exercise 1 Solution: Mastering the `geom`s"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r, child="exercise-setup.Rmd"}
+```
+```{r setup, include = FALSE}
+library(tidyverse) # contains ggplot2, dplyr, tidyr, etc
+library(agridat) # for `crampton.pig` data
+library(catdata) # for `heart` data
+data("heart")
+heart2 <- heart %>% 
+  as_tibble(heart) %>% 
+  mutate(family_history = ifelse(famhist==1, "Yes", "No"),
+         heart_disease = ifelse(y==1, "Yes", "No"))
+knitr::opts_chunk$set(
+  fig.path = "images/part1-exercise-01/",
+  class.source = "solution"
+)
+```
+
+## Exercise 1.1: Scatterplot
+
+```{r part1-exercise-01}
+ggplot(crampton.pig, aes(weight1, weight2, color = treatment, size = feed)) + 
+  geom_point()
+```
+
+## Exercise 1.2: Tile plot
+
+```{r part1-exercise-02}
+ggplot(crampton.pig, aes(rep, treatment, fill = weight2 - weight1)) + 
+  geom_tile(color = "black", size = 2)
+```
+
+## Exercise 1.3: Density plot
+
+```{r part1-exercise-03}
+ggplot(crampton.pig, aes(weight2 - weight1, fill = treatment)) + 
+  geom_density(alpha = 0.7) 
+```
+
+## Exercise 1.4: Grouped barplot
+
+```{r part1-exercise-04}
+ggplot(crampton.pig, aes(treatment, feed, fill = rep)) + 
+  geom_col(position = "dodge")
+```
+
+## Exercise 1.5: Rose plot
+
+```{r part1-exercise-05}
+ggplot(crampton.pig, aes(treatment, feed, fill = rep)) + 
+  geom_col(position = "dodge") + coord_polar("x")
+```
+
+## Exercise 1.6: Boxplot
+
+```{r part1-exercise-06}
+ggplot(heart2, aes(heart_disease, obesity, fill = family_history)) + 
+  geom_boxplot()
+```
+
+## Exercise 1.7: Dotplot
+
+```{r part1-exercise-07}
+ggplot(heart2, aes(heart_disease, obesity, fill = family_history)) + 
+  geom_dotplot(binaxis = "y", stackdir = "center",
+               position = "dodge")
+```
+
+## Exercise 1.8: Violin plot
+
+```{r part1-exercise-08}
+ggplot(heart2, aes(heart_disease, obesity, fill = family_history)) + 
+  geom_violin()
+```
+
+## Exercise 1.9: 2D density plot
+
+```{r part1-exercise-09}
+ggplot(heart2, aes(age, obesity)) + 
+  geom_density_2d_filled()
+```
+
+## Exercise 1.10: Hexagonal heatmap
+
+```{r part1-exercise-10}
+ggplot(heart2, aes(age, obesity)) + 
+  geom_hex()
+```

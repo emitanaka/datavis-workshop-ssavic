@@ -1,0 +1,11 @@
+tidyverse
+ggrepel
+usethis
+agridat
+catdata
+colorspace
+patchwork
+rmarkdown
+remotes
+shiny
+hexbin

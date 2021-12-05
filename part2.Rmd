@@ -1,0 +1,66 @@
+---
+title: "Part 2: Diving Deeper into Data Visualization with R"
+author: "Di Cook"
+date: "6th December 2021"
+---
+
+## Slides
+
+We recommend that you open the html slides <i class="fas fa-link"></i> with [Google Chrome web browser](https://www.google.com/intl/en_au/chrome/). 
+
+1. Review of Grammar of Graphics [<i class="fas fa-link"></i>](slides/part2-session1.html) [<i class="fas fa-file-pdf"></i>](slides/part2-session1.pdf)
+2. Making maps [<i class="fas fa-link"></i>](slides/part2-session2.html) [<i class="fas fa-file-pdf"></i>](slides/part2-session2.pdf)
+3. Getting your plots <br> to talk back [<i class="fas fa-link"></i>](slides/part2-session3.html) [<i class="fas fa-file-pdf"></i>](slides/part2-session3.pdf)
+4. Determining the best plot design [<i class="fas fa-link"></i>](slides/part2-session4.html) [<i class="fas fa-file-pdf"></i>](slides/part2-session4.pdf)
+
+## Schedule
+
+Time | Activity 
+:----|:---
+1.30-2.00 | **Lesson 1:** Check your `ggplot2` knowledge
+2.00-2.15 |  *Break out session*
+2.15-2.45 | **Lesson 2:** Making maps 
+2.45-3.00 | *Break out session*
+3.00-3.30 | *Coffee Break*
+3.30-4.00 | **Lesson 3:** Getting your plots to talk back 
+4.00-4.15 | *Break out session*
+4.15-4.45 | **Lesson 4:** Determining best plot design
+4.45-5.00 | *Break out session* + Conclusion
+
+## Data
+
+Download the folowing data for the exercises:
+
+* <a href="data/melb_lga_covid.csv" download>melb_lga_covid.csv</a>
+* <a href="data/VIF2019_Population_Service_Ages_LGA_2036.xlsx" download>VIF2019_Population_Service_Ages_LGA_2036.xlsx</a>
+* <a href="data/oz_map.rda" download>oz_map.rda</a>
+* <a href="data/platypus.rda" download>platypus.rda</a>
+* <a href="data/TB_notifications_2020-07-01.csv" download>TB_notifications_2020-07-01.csv</a>
+
+
+
+## Exercises
+
+Before getting started, you will need to install the following R-packages:
+
+```r
+```{r, echo = FALSE, results='asis'}
+pkgs <- readLines("install-pkgs-day2.txt")
+pkgsq <- paste0("'", pkgs, "'")
+glue::glue("
+  install.packages(c( {paste0(pkgsq, collapse=',\\n\\t\\t\\t\\t\\t')}))
+  ")
+```
+```
+
+
+
+
+1. Review of Grammar of Graphics <a class="tag" href="exercises/part2-exercise-01.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/part2-exercise-01.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/part2-exercise-01-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/part2-exercise-01-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+
+2. Making maps <a class="tag" href="exercises/part2-exercise-02.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/part2-exercise-02.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/part2-exercise-02-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/part2-exercise-02-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+
+
+3. Getting your plots to talk back <a class="tag" href="exercises/part2-exercise-03.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/part2-exercise-03.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/part2-exercise-03-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/part2-exercise-03-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>
+
+4. Determining the best plot design <a class="tag" href="exercises/part2-exercise-04.Rmd" download><i class="fas fa-download"></i> Rmd</a> <a class="tag" href="exercises/part2-exercise-04.html" target="_blank"><i class="fas fa-globe"></i> html</a> <a class="tag" href="exercises/part2-exercise-04-solution.Rmd" download><i class="fas fa-download"></i> solution Rmd</a> <a class="tag" href="exercises/part2-exercise-04-solution.html" target="_blank"><i class="fas fa-globe"></i> html solution</a>

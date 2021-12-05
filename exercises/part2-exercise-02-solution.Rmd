@@ -1,0 +1,121 @@
+---
+title: "Part 2 Exercise 2 Solution: Making maps"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+Push the `knit` button!
+
+
+```{r setup, child="exercise-setup.Rmd", eval = file.exists("exercise-setup.Rmd")}
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.path = "images/part2-exercise-02/",
+  class.source = "solution",
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  fig.height = 3,
+  fig.width = 10
+)
+```
+
+```{r pkgs, message = FALSE, warning = FALSE}
+library(tidyverse) # contains ggplot2, dplyr, tidyr, etc
+library(ggthemes)
+library(ggmap)
+```
+
+## `tuberculosis` dataset
+
+```{r tb-data}
+tb <- read_csv(here::here("data/TB_notifications_2020-07-01.csv")) %>% 
+  dplyr::select(country, iso3, year, new_sp_m04:new_sp_fu) %>%
+  pivot_longer(cols=new_sp_m04:new_sp_fu, names_to="sexage", values_to="count") %>%
+  mutate(sexage = str_replace(sexage, "new_sp_", "")) %>%
+  mutate(sex=substr(sexage, 1, 1), 
+         age=substr(sexage, 2, length(sexage))) %>%
+  dplyr::select(-sexage) %>%
+  filter(!(age %in% c("04", "014", "514", "u"))) %>%
+  filter(year > 1996, year < 2013) %>%
+  mutate(age_group = factor(age, 
+                            labels = c("15-24", "25-34", "35-44", 
+                                       "45-54", "55-64", "65-"))) %>%
+  dplyr::select(country, year, age_group, sex, count)
+
+# Filter Australia
+tb_oz <- tb %>% 
+  filter(country == "Australia") 
+
+# Fix names for map joining
+tb_fixed <- tb %>% 
+  mutate(region=recode(country, 
+                       "United States of America"="USA", 
+                       "United Kingdom of Great Britain and Northern Ireland"="UK",
+                       "Russian Federation"="Russia",
+                       "Viet Nam"="Vietnam",
+                       "Venezuela (Bolivarian Republic of)"="Venezuela",
+                       "Bolivia (Plurinational State of)"="Bolivia",
+                       "Czechia"="Czech Republic",
+                       "Iran (Islamic Republic of)"="Iran",
+                       "Lao People's Democratic Republic"="Laos",
+                       "Democratic People's Republic of Korea"="North Korea",
+                       "Republic of Korea"="South Korea",
+                       "United Republic of Tanzania"="Tanzania",
+                       "Congo"="Republic of Congo"))
+tb_2012 <- tb_fixed %>% #<<
+  filter(year == 2012) %>%
+  group_by(region) %>%
+  summarise(count = sum(count))
+```
+## `platypus` dataset
+
+```{r platypus}
+load(here::here("data/platypus.rda"))
+oz_bbox <- c(112.9, # min long
+              -45, # min lat
+              159, # max long
+              -10) # max lat
+oz_map <- get_map(location = oz_bbox, source = "osm")
+```
+
+### Exercise 2.1: Polygon fill colour
+
+```{r part2-exercise-01, echo = T, class = "target"}
+world_map <- map_data("world")
+oz <- world_map %>% 
+  filter(region == "Australia")
+
+ggplot(oz, aes(x=long, y=lat, 
+               group=group)) + 
+  geom_polygon(fill = "orange") + #<<
+  coord_map() +
+  theme_map()
+```
+
+### Exercise 2.2: Change the color palette 
+
+```{r part2-exercise-02, echo = T, class = "target", fig.width=10, fig.height=4}
+tb_2012_map <- world_map %>% left_join(tb_2012) #<<
+ggplot(tb_2012_map, aes(x=long, y=lat, group=group)) + 
+    geom_polygon(aes(fill=count), #<<
+             color="grey70", size=0.1, na.rm=TRUE) +  #<<
+    expand_limits(x = world_map$long*1.1, y = world_map$lat*1.1) +
+    scale_fill_distiller("Count", palette="YlGnBu") +
+    theme_map() 
+```
+
+### Exercise 2.3: Density plot on map
+
+```{r part2-exercise-03, echo = T, class = "target", fig.height = 4}
+ggmap(oz_map) + 
+  geom_density2d(data=platypus, 
+             aes(x=Longitude, y=Latitude), 
+     colour="purple") + 
+  theme_map()
+```
+

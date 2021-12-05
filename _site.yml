@@ -1,0 +1,22 @@
+name: "Data Visualisation with R"
+output_dir: "docs"
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+    css: assets/site-styles.css
+navbar:
+  title: "Data Visualisation with R"
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: index.html
+    - text: "Part 1"
+      href: part1.html
+    - text: "Part 2"
+      href: part2.html
+    - text: "Help!"
+      href: help.html
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/emitanaka/datavis-workshop-ssavic
